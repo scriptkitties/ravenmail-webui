@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/', 'DashboardController@getIndex');
-Route::resource('/alias', 'AliasController');
-Route::resource('/domain', 'DomainController');
-Route::resource('/user', 'UserController');
+Route::get('/', 'DashboardController@getIndex')->name('dashboard');
+Route::resource('/aliases', 'AliasController');
+Route::resource('/domains', 'DomainController');
+Route::resource('/users', 'UserController');
 
