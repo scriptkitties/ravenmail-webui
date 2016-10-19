@@ -15,13 +15,7 @@
             <h1>
                 <a href="{{ URL::to('/') }}">Tyilmail</a>
             </h1>
-            <nav>
-                <ul>
-                    <li><a href="{{ URL::to('domains.index') }}">domains</a></li>
-                    <li><a href="{{ URL::to('users.index') }}">users</a></li>
-                    <li><a href="{{ URL::to('aliases.index') }}">aliases</a></li>
-                </ul>
-            </nav>
+            @include('nav')
         </header>
         <main>
             @yield('content')
