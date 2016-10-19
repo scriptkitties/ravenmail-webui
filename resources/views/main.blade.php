@@ -17,6 +17,15 @@
             </h1>
             @include('nav')
         </header>
+        @if($errors->count() > 0)
+            <aside class="error">
+                <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+                </ul>
+            </aside>
+        @endif
         <main>
             @yield('content')
         </main>
