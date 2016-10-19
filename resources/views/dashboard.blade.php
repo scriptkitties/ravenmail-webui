@@ -1,37 +1,18 @@
 @extends('main')
 
 @section('content')
-<h1>Dashboard</h1>
-<div class="container">
-    <div class="grid">
-        <div class="grid__col grid__col--1-of-3">
-            <a href="{{ URL::route('domains.index') }}">
-                <div class="text-center">
-                    <i class="fa fa-globe"></i>
-                </div>
-                <p class="text-center">Domains</p>
-                <p class="text-center">{{ $domains }}</p>
-            </a>
-        </div>
-        <div class="grid__col grid__col--1-of-3">
-            <a href="{{ URL::route('users.index') }}">
-                <div class="text-center">
-                    <i class="fa fa-envelope"></i>
-                </div>
-                <p class="text-center">Users</p>
-                <p class="text-center">{{ $users }}</p>
-            </a>
-        </div>
-        <div class="grid__col grid__col--1-of-3">
-            <a href="{{ URL::route('aliases.index') }}">
-                <div class="text-center">
-                    <i class="fa fa-mail-forward"></i>
-                </div>
-                <p class="text-center">Aliases</p>
-                <p class="text-center">{{ $aliases }}</p>
-            </a>
-        </div>
-    </div>
-</div>
+<h2>Dashboard</h2>
+<h3>Server stats</h3>
+<ul>
+    <li>
+        <i class="fa fa-fw fa-globe"></i> {{ $domains }} domains
+    </li>
+    <li>
+        <i class="fa fa-fw fa-envelope"></i> {{ $users }} email accounts
+    </li>
+    <li>
+        <i class="fa fa-fw fa-mail-forward"></i> {{ $aliases }} email forwards
+    </li>
+</ul>
 @endsection
 

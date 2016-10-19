@@ -11,6 +11,10 @@ class AuthController extends Controller
 {
     public function getLogin()
     {
+        if (Auth::check()) {
+            return redirect(route('dashboard'));
+        }
+
         return view('auth.login');
     }
 
@@ -23,6 +27,10 @@ class AuthController extends Controller
 
     public function postLogin(Request $request)
     {
+        if (Auth::check()) {
+            return redirect()->intended(route('dashboard'));
+        }
+
         $parts = explode('@', $request->input('email'));
         $count = count($parts);
 
@@ -39,7 +47,7 @@ class AuthController extends Controller
         }
 
         $password = $request->input('password');
-        $remember = false;
+        $remember = $request->has('remember');
 
         $user = User::where('local', $local)
             ->where('domain', $domain)
@@ -54,7 +62,7 @@ class AuthController extends Controller
 
         Auth::login($user, $remember);
 
-        return redirect()->intended('dashboard');
+        return redirect()->intended(route('dashboard'));
     }
 }
 
