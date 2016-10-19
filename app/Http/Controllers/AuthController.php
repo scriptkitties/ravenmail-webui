@@ -43,6 +43,8 @@ class AuthController extends Controller
 
         $user = User::where('local', $local)
             ->where('domain', $domain)
+            ->where('active', true)
+            ->where('admin', true)
             ->first()
         ;
 
