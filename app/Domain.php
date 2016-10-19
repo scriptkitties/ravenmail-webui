@@ -14,4 +14,10 @@ class Domain extends Model
     {
         return $this->hasMany('App\User', 'domain', 'name');
     }
+
+    public function aliases()
+    {
+        return $this->hasMany('App\Alias', 'domain', 'name');
+    }
 }
+

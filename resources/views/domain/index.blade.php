@@ -1,7 +1,8 @@
 @extends('main')
 
 @section('content')
-<h1>Domains</h1>
+<h2>Domains</h2>
+<a href="{{ route('domains.create') }}"><i class="fa fa-plus"></i> Add domain</a>
 <table>
     <thead>
         <tr>
@@ -20,8 +21,16 @@
                 <td>
                     {{ $domain->users()->count() }}
                 </td>
-                <td>NYI</td>
-                <td>NYI</td>
+                <td>
+                    {{ $domain->aliases()->count() }}
+                </td>
+                <td>
+                    @if($domain->public)
+                        <i class="fa fa-fw fa-check-square-o"></i>
+                    @else
+                        <i class="fa fa-fw fa-square-o"></i>
+                    @endif
+                </td>
             </tr>
         @endforeach
     </tbody>

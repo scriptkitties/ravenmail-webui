@@ -30,7 +30,7 @@ class DomainController extends Controller
      */
     public function create()
     {
-        //
+        return view('domain.create');
     }
 
     /**
@@ -41,7 +41,22 @@ class DomainController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $name = $request->input('domain');
+        $count = Domain::where('name', $name)->count();
+
+        if ($count > 0) {
+            // TODO: show this error somehow
+            return redirect(route('domains.index'))->withErrors(
+                ['Domain already exists']
+            );
+        }
+
+        $domain = new Domain();
+        $domain->name = $request->input('domain');
+        $domain->public = $request->has('public');
+        $domain->save();
+
+        return redirect(route('domains.index'));
     }
 
     /**
