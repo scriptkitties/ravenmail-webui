@@ -5,10 +5,12 @@
 <h3>Domain stats</h3>
 <ul>
     <li>
-        <i class="fa fa-fw fa-envelope"></i> {{ $domain->users()->count() }} email accounts
+        <i class="fa fa-fw fa-envelope"></i>
+        {{ $domain->users()->count() }} email {{ str_plural('account', $domain->users()->count()) }}
     </li>
     <li>
-        <i class="fa fa-fw fa-mail-forward"></i> {{ $domain->aliases()->count() }} email forwards
+        <i class="fa fa-fw fa-mail-forward"></i>
+        {{ $domain->aliases()->count() }} email {{ str_plural('forwards', $domain->aliases()->count()) }}
     </li>
     <li>
         Domain is
