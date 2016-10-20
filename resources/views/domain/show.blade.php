@@ -55,7 +55,10 @@
             I am sure
         </p>
         <p>
-            <button>Delete this domain</button>
+            <button>
+                <i class="fa fa-fw fa-trash"></i>
+                Delete this domain
+            </button>
         </p>
     </form>
 </div>
