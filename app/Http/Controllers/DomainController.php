@@ -62,12 +62,20 @@ class DomainController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($name)
     {
-        //
+        $domain = Domain::where('name', $name)->first();
+
+        if ($domain === null) {
+            return App::abort(404);
+        }
+
+        return view('domain.show', [
+            'domain' => $domain
+        ]);
     }
 
     /**
@@ -96,11 +104,26 @@ class DomainController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $name)
     {
-        //
+        $domain = Domain::where('name', $name)->first();
+
+        if ($domain === null) {
+            return App::abort(404);
+        }
+
+        if (!$request->has('confirm-destroy')) {
+            return view('domain.show', ['domain' => $domain])->withErrors(
+                ['You must confirm this action']
+            );
+        }
+
+        $domain->delete();
+
+        return redirect(route('domains.index'));
     }
 }
+
