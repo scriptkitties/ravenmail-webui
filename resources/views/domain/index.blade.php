@@ -16,13 +16,19 @@
         @foreach($domains as $domain)
             <tr>
                 <td>
-                    <a href="{{ URL::route('domains.show', ['name' => $domain->name]) }}">{{ $domain->name }}</a>
+                    <a href="{{ route('domains.show', ['name' => $domain->name]) }}">{{ $domain->name }}</a>
                 </td>
                 <td>
                     {{ $domain->users()->count() }}
+                    <a href="{{ route('users.create', ['domain' => $domain->name]) }}">
+                        <i class="fa fa-fw fa-plus"></i>
+                    </a>
                 </td>
                 <td>
                     {{ $domain->aliases()->count() }}
+                    <a href="{{ route('aliases.create', ['domain' => $domain->name]) }}">
+                        <i class="fa fa-fw fa-plus"></i>
+                    </a>
                 </td>
                 <td>
                     @if($domain->public)

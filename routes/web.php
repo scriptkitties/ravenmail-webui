@@ -19,9 +19,9 @@ Route::group(['middleware' => ['web']], function() {
 
     Route::group(['middleware' => ['auth']], function() {
         Route::get('/', 'DashboardController@getIndex')->name('dashboard');
-        Route::resource('/aliases', 'AliasController');
         Route::resource('/domains', 'DomainController');
-        Route::resource('/users', 'UserController');
+        Route::resource('/domains/{domain}/aliases', 'AliasController');
+        Route::resource('/domains/{domain}/users', 'UserController');
     });
 });
 
