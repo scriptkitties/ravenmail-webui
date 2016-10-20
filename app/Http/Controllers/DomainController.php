@@ -81,24 +81,41 @@ class DomainController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($name)
     {
-        //
+        $domain = Domain::where('name', $name)->first();
+
+        if ($domain === null) {
+            return App::abort(404);
+        }
+
+        return view('domain.edit', [
+            'domain' => $domain
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $name)
     {
-        //
+        $domain = Domain::where('name', $name)->first();
+
+        if ($domain === null) {
+            return App::abort(404);
+        }
+
+        $domain->public = $request->has('public');
+        $domain->save();
+
+        return redirect(route('domains.show', ['name' => $domain->name]));
     }
 
     /**

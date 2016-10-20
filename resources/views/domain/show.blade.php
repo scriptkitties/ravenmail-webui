@@ -21,6 +21,11 @@
         @endif
     </li>
 </ul>
+<p>
+    <a href="{{ route('domains.edit', ['name' => $domain->name]) }}">
+        <i class="fa fa-fw fa-pencil"></i> Edit domain
+    </a>
+</p>
 <h3>Create new ...</h3>
 <ul>
     <li>
