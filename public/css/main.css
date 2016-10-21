@@ -56,8 +56,12 @@ table {
 ul li p {
   margin: 0; }
 
+.content-left {
+  text-align: left; }
 .content-center {
   text-align: center; }
+.content-right {
+  text-align: right; }
 
 .toc {
   padding: 4px; }
