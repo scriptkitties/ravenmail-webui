@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
+use App\Http\Requests;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -31,36 +33,25 @@ class AuthController extends Controller
             return redirect()->intended(route('dashboard'));
         }
 
-        $parts = explode('@', $request->input('email'));
-        $count = count($parts);
+        try {
+            $user = User::findByAddressOrFail($request->input('email'));
 
-        if ($count < 2) {
-            return view('auth.login')->withErrors(['Invalid emailaddress']);
+            if (!Hash::check($request->input('password'), $user->password)) {
+                throw new Exception('Invalid email address or password');
+            }
+
+            if (!$user->active) {
+                throw new Exception('Account has been disabled');
+            }
+
+            if (!$user->admin) {
+                throw new Exception('Account has no access to the admin interface');
+            }
+        } catch(Exception $e) {
+            return view('auth.login')->withErrors([$e->getMessage()]);
         }
 
-        if ($count > 2) {
-            $domain = array_unshift($parts);
-            $local = implode('@', $parts);
-        } else {
-            $local = $parts[0];
-            $domain = $parts[1];
-        }
-
-        $password = $request->input('password');
-        $remember = $request->has('remember');
-
-        $user = User::where('local', $local)
-            ->where('domain', $domain)
-            ->where('active', true)
-            ->where('admin', true)
-            ->first()
-        ;
-
-        if ($user === null || !password_verify($password, $user->password)) {
-            return view('auth.login')->withErrors(['Invalid emailaddress or password']);
-        }
-
-        Auth::login($user, $remember);
+        Auth::login($user, $request->has('remember'));
 
         return redirect()->intended(route('dashboard'));
     }
