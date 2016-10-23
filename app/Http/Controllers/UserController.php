@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
+use App\Domain;
+use App\User;
 use App\Http\Requests;
 
 class UserController extends Controller
@@ -11,43 +14,72 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  string $name
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($name)
     {
-        //
+        $domain = Domain::where('name', $name)->firstOrFail();
+
+        return view('user.index', [
+            'domain' => $domain
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($name)
     {
-        //
+        $domain = Domain::where('name', $name)->firstOrFail();
+
+        return view('user.create', [
+            'domain' => $domain
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
+     * @param  string  name
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($name, Request $request)
     {
-        //
+        // TODO: form validation
+
+        $domain = Domain::where('name', $name)->firstOrFail();
+        $user = new User();
+        $user->local = $request->input('local');
+        $user->domain = $domain->name;
+        $user->password = Hash::make($request->input('password'));
+        $user->admin = $request->has('admin');
+        $user->active = $request->has('active');
+        $user->remember_token = '';
+        $user->save();
+
+        // TODO: add a success message
+        return view('domain.show', ['domain' => $domain]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $domain_name
+     * @param  string  $local
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($domain_name, $address)
     {
-        //
+        $user = User::findByAddressOrFail($address);
+
+        return view ('user.show', [
+            'user' => $user
+        ]);
     }
 
     /**

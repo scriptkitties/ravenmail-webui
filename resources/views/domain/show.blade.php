@@ -5,8 +5,12 @@
 <h3>Domain stats</h3>
 <ul>
     <li>
-        <i class="fa fa-fw fa-envelope"></i>
-        {{ $domain->users()->count() }} email {{ str_plural('account', $domain->users()->count()) }}
+        <a href="{{ route('users.index', ['domain' => $domain->name]) }}">
+            <i class="fa fa-fw fa-envelope"></i>
+            {{ $domain->users()->count() }}
+            email
+            {{ str_plural('account', $domain->users()->count()) }}
+        </a>
     </li>
     <li>
         <i class="fa fa-fw fa-mail-forward"></i>
