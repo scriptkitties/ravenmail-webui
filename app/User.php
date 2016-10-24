@@ -10,13 +10,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class User extends Model implements Authenticatable
 {
     use AuthenticatableTrait;
+    use AddressTrait;
 
     public $timestamps = false;
-
-    public function getAddress() : string
-    {
-        return $this->local . '@'. $this->domain;
-    }
 
     public static function findByAddressOrFail(string $address) : User
     {
