@@ -25,26 +25,26 @@
         @endif
     </li>
 </ul>
-<p>
-    <a href="{{ route('domains.edit', ['name' => $domain->name]) }}">
+<section>
+    <a class="pure-button" href="{{ route('domains.edit', ['name' => $domain->name]) }}">
         <i class="fa fa-fw fa-pencil"></i> Edit domain
     </a>
-</p>
+</section>
 <h3>Create new ...</h3>
-<ul>
-    <li>
-        <a href="{{ route('users.create', ['domain' => $domain->name]) }}">
+<ul class="pure-menu-list">
+    <li class="pure-menu-item">
+        <a class="pure-menu-link" href="{{ route('users.create', ['domain' => $domain->name]) }}">
             <i class="fa fa-fw fa-envelope"></i> Account
         </a>
     </li>
-    <li>
-        <a href="{{ route('aliases.create', ['domain' => $domain->name]) }}">
+    <li class="pure-menu-item">
+        <a class="pure-menu-link" href="{{ route('aliases.create', ['domain' => $domain->name]) }}">
             <i class="fa fa-fw fa-mail-forward"></i> Forward
         </a>
     </li>
 </ul>
 <h3>Remove domain</h3>
-<div class="error">
+<div class="warning">
     <form method="post" action="{{ route('domains.destroy', ['name' => $domain->name]) }}">
         {{ csrf_field() }}
         {{ method_field('DELETE') }}
@@ -54,16 +54,18 @@
             this information can be retrieved once it has been deleted. You
             have been warned.
         </p>
-        <p>
-            <input type="checkbox" name="confirm-destroy">
-            I am sure
-        </p>
-        <p>
-            <button>
+        <div class="pure-control-group">
+            <label class=pure-checkbox" for="confirm-destroy">
+                <input id="confirm-destroy" type="checkbox" name="confirm-destroy">
+                I am sure
+            </label>
+        </div>
+        <div class="pure-control-group">
+            <button class="pure-button" type="submit">
                 <i class="fa fa-fw fa-trash"></i>
                 Delete this domain
             </button>
-        </p>
+        </div>
     </form>
 </div>
 @endsection
