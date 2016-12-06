@@ -2,10 +2,14 @@
 
 @section('content')
 <h2>Users on {{ $domain->name }}</h2>
-<a href="{{ route('users.create', ['domain' => $domain->name]) }}">
-    <i class="fa fa-plus"></i> Add user
-</a>
-<table>
+<section>
+    <p>
+        <a class="pure-button" href="{{ route('users.create', ['domain' => $domain->name]) }}">
+            <i class="fa fa-plus"></i> Add user
+        </a>
+    </p>
+</section>
+<table class="pure-table pure-table-striped">
     <thead>
         <tr>
             <th>Email address</th>
