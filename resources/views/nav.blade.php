@@ -1,10 +1,10 @@
-<nav>
-    <ul>
+<nav class="pure-menu pure-menu-horizontal">
+    <ul class="pure-menu-list">
         @if(Auth::check())
-            <li><a href="{{ route('domains.index') }}">domains</a></li>
-            <li><a href="{{ route('logout') }}">logout</a></li>
+            <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('domains.index') }}">domains</a></li>
+            <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('logout') }}">logout</a></li>
         @else
-            <li><a href="{{ route('login') }}">login</a></li>
+            <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('login') }}">login</a></li>
         @endif
     </ul>
 </nav>
