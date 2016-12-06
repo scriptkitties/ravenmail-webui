@@ -21,7 +21,7 @@
     <body>
         <header id="site-header">
             <h1>
-                <a href="{{ URL::to('/') }}">Tyilmail</a>
+                <a href="{{ URL::to('/') }}">{{ config('app.name') }}</a>
             </h1>
             @include('nav')
         </header>
