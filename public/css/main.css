@@ -61,10 +61,6 @@ input {
 .toc {
   padding: 4px; }
 
-.notice {
-  border: 1px solid #f90;
-  padding: 4px; }
-
 .notice, .success, .warning, .error {
 	color: #fff;
 	text-shadow: inherit;
