@@ -1,36 +1,26 @@
 @extends('main')
 
 @section('content')
-<form method="post" action="{{ route('domains.store') }}">
+<form class="pure-form pure-form-aligned" method="post" action="{{ route('domains.store') }}">
     {{ csrf_field() }}
-    <div class="container">
-        <div class="grid">
-            <section class="grid__col grid__col--1-of-2 content-right">
-                Domain name
-            </section>
-            <section class="grid__col grid__col--1-of-2 content-left">
-                <input type="text" name="domain">
-            </section>
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="domain">Domain name</label>
+            <input id="domain" name="domain" type="text">
         </div>
-    </div>
-    <div class="container">
-        <div class="grid">
-            <section class="grid__col grid__col--1-of-2 content-right">
+        <div class="pure-control-group">
+            <label class="pure-checkbox" for="public">
+                <input id="public" name="public" type="checkbox">
                 Open registration
-            </section>
-            <section class="grid__col grid__col--1-of-2 content-left">
-                <input type="checkbox" name="public">
-            </section>
+            </label>
         </div>
-    </div>
-    <div class="container">
-        <section class="content-center">
-            <button type="submit">
+        <div class="content-center">
+            <button class="pure-button" type="submit">
                 <i class="fa fa-fw fa-save"></i>
                 Add domain
             </button>
-        </section>
-    </div>
+        </div>
+    </fieldset>
 </form>
 @endsection
 
