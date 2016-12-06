@@ -1,42 +1,30 @@
 @extends('main')
 
 @section('content')
-<form method="post" action="{{ route('login.post') }}">
+<form method="post" action="{{ route('login.post') }}" class="pure-form pure-form-aligned">
     {{ csrf_field() }}
-    <div class="container">
-        <div class="grid">
-            <section class="grid__col grid__col--1-of-2 content-right">
-                Email address
-            </section>
-            <section class="grid__col grid__col--1-of-2 content-left">
-                <input type="text" name="email">
-            </section>
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="text">
         </div>
-    </div>
-    <div class="container">
-        <div class="grid">
-            <section class="grid__col grid__col--1-of-2 content-right">
-                Password
-            </section>
-            <section class="grid__col grid__col--1-of-2 content-left">
-                <input type="password" name="password">
-            </section>
+        <div class="pure-control-group">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password">
         </div>
-    </div>
-    <div class="container">
-        <section class="content-center">
-            <input type="checkbox" name="remember">
-            Remember me
-        </section>
-    </div>
-    <div class="container">
-        <section class="content-center">
-            <button type="submit">
+        <div class="pure-control-group">
+            <label for="remember" class="pure-checkbox">
+                <input id="remember" name="remember" type="checkbox">
+                Remember me
+            </label>
+        </div>
+        <div class="pure-control-group">
+            <button class="pure-button" type="submit">
                 <i class="fa fa-fw fa-sign-in"></i>
                 Log in
             </button>
-        </section>
-    </div>
+        </div>
+    </fieldset>
 </form>
 @endsection
 
