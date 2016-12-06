@@ -57,10 +57,34 @@ ul li p {
 .toc {
   padding: 4px; }
 
-.error {
-  border: 1px solid #f00;
-  padding: 4px; }
-
 .notice {
   border: 1px solid #f90;
   padding: 4px; }
+
+.notice, .success, .warning, .error {
+	color: #fff;
+	text-shadow: inherit;
+}
+
+div.notice, div.success, div.warning, div.error,
+section.notice, section.success, section.warning, section.error,
+p.notice, p.success, p.warning, p.error {
+	padding: 1em
+}
+
+.notice {
+	background: rgb(66, 184, 221);
+}
+
+.success {
+	background: rgb(28, 184, 65);
+}
+
+.warning {
+	background: rgb(223, 117, 20);
+}
+
+.error {
+	background: rgb(202, 60, 60);
+}
+
