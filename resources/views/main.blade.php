@@ -16,7 +16,7 @@
         <link rel="stylesheet" type="text/css" href="/css/pure/menus-skin-min.css">
         <link rel="stylesheet" type="text/css" href="/css/pure/tables-min.css">
         <link rel="stylesheet" type="text/css" href="/css/main.css">
-        <title>Tyilmail</title>
+        <title>{{ config('app.name') }}</title>
     </head>
     <body>
         <header id="site-header">
