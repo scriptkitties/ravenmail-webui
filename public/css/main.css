@@ -10,17 +10,8 @@ body {
 
 header#site-header h1 a {
   color: inherit; }
-header#site-header h1, header#site-header nav {
+header#site-header h1, header nav {
   text-align: center; }
-header#site-header nav ul {
-  list-style: none;
-  background-color: #f3f3f3;
-  text-align: center;
-  padding: 0;
-  margin: 0; }
-  header#site-header nav ul li {
-    margin: 0 5px;
-    display: inline; }
 
 nav.toc {
   border: 1px solid #ddd; }
