@@ -47,6 +47,10 @@ table {
 ul li p {
   margin: 0; }
 
+input {
+	background: white;
+}
+
 .content-left {
   text-align: left; }
 .content-center {
