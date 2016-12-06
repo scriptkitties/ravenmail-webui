@@ -26,12 +26,14 @@
             @include('nav')
         </header>
         @if($errors->count() > 0)
-            <aside class="error">
-                <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-                </ul>
+            <aside>
+                <section class="error">
+                    <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                    </ul>
+                </section>
             </aside>
         @endif
         <main>
