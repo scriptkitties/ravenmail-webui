@@ -1,51 +1,36 @@
 @extends('main')
 
 @section('content')
-<form method="post" action="{{ route('users.store', ['domain' => $domain->name]) }}">
+<form class="pure-form pure-form-aligned" method="post" action="{{ route('users.store', ['domain' => $domain->name]) }}">
     {{ csrf_field() }}
-    <div class="container">
-        <div class="grid">
-            <section class="grid__col grid__col--1-of-2 content-right">
-                <input type="text" name="local">
-            </section>
-            <section class="grid__col grid__col--1-of-2 content-left">
-                {{ '@' . $domain->name }}
-            </section>
-        </div>
+    <fieldset>
+    <div class="pure-control-group">
+        <label for="local">Local part</label>
+        <input id="local" name="local" type="text">
     </div>
-    <div class="container">
-        <div class="grid">
-            <section class="grid__col grid__col--1-of-2 content-right">
-                Password
-            </section>
-            <section class="grid__col grid__col--1-of-2 content-left">
-                <input type="password" name="password">
-            </section>
-        </div>
+    <div class="pure-control-group">
+        <label>Domain part</label>
+        {{ $domain->name }}
     </div>
-    <div class="container">
-        <div class="grid">
-            <section class="grid__col grid__col--1-of-2 content-right">
-                Admin user
-            </section>
-            <section class="grid__col grid__col--1-of-2 content-left">
-                <input type="checkbox" name="admin">
-            </section>
-        </div>
+    <div class="pure-control-group">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password">
     </div>
-    <div class="container">
-        <div class="grid">
-            <section class="grid__col grid__col--1-of-2 content-right">
-                Active
-            </section>
-            <section class="grid__col grid__col--1-of-2 content-left">
-                <input type="checkbox" name="active" checked="checked">
-            </section>
-        </div>
+    <div class="pure-control-group">
+        <label for="admin">
+            Admin user
+            <input id="admin" name="admin" type="checkbox">
+        </label>
     </div>
-    <div class="container">
+    <div class="pure-control-group">
+        <label for="active">
+            Active
+            <input id="active" name="active" type="checkbox" checked="checked">
+        </label>
+    </div>
+    <div class="pure-control-group">
         <div class="content-center">
-            <button>
+            <button class="pure-button" type="submit">
                 <i class="fa fa-fw fa-save"></i>
                 Create user
             </button>
