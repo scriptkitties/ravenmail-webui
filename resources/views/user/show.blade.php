@@ -23,7 +23,7 @@
     </li>
 </ul>
 <p>
-    <a href="{{ route('users.edit', ['name' => $user->domain, 'address' => $user->getAddress()]) }}">
+    <a class="pure-button" href="{{ route('users.edit', ['name' => $user->domain, 'address' => $user->getAddress()]) }}">
         <i class="fa fa-fw fa-pencil"></i> Edit user
     </a>
 </p>
@@ -39,6 +39,5 @@
     <p>No aliases point to this address.</p>
 @endforelse
 </ul>
-<h3>Remove user</h3>
 @endsection
 
