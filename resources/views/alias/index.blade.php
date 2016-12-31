@@ -12,6 +12,7 @@
         <tr>
             <th>Origin</th>
             <th>Destination</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
