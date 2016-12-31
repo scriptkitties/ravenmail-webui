@@ -100,8 +100,13 @@ class AliasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(string $domain, string $address)
     {
-        //
+        $alias = Alias::findByAddressOrFail($address);
+        $alias->delete();
+
+        return redirect()->route('aliases.index', [
+            'domain' => $domain
+        ]);
     }
 }
