@@ -37,17 +37,17 @@ class AuthController extends Controller
             $user = User::findByAddressOrFail($request->input('email'));
 
             if (!Hash::check($request->input('password'), $user->password)) {
-                throw new Exception('Invalid email address or password');
+                throw new \Exception('Invalid email address or password');
             }
 
             if (!$user->active) {
-                throw new Exception('Account has been disabled');
+                throw new \Exception('Account has been disabled');
             }
 
             if (!$user->admin) {
-                throw new Exception('Account has no access to the admin interface');
+                throw new \Exception('Account has no access to the admin interface');
             }
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             return view('auth.login')->withErrors([$e->getMessage()]);
         }
 
