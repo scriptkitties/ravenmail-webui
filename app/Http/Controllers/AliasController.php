@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Domain;
+use App\Alias;
 
 class AliasController extends Controller
 {
@@ -23,9 +25,11 @@ class AliasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(string $name)
     {
-        //
+        return view('alias.create', [
+            'domain' => $name
+        ]);
     }
 
     /**
@@ -34,9 +38,19 @@ class AliasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, string $name)
     {
-        //
+        $domain = Domain::findByNameOrFail($name);
+
+        $alias = new Alias();
+        $alias->domain = $domain->name;
+        $alias->local = $request->input('local');
+        $alias->destination = $request->input('destination');
+        $alias->save();
+
+        return redirect()->route('domains.show', [
+            'domain' => $domain->name
+        ]);
     }
 
     /**
