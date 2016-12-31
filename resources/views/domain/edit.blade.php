@@ -18,12 +18,13 @@
                 Public domain
             </label>
         </div>
-    <div class="pure-control-group">
-        <button class="pure-button" type="submit">
-            <i class="fa fa-fw fa-save"></i>
-            Save
-        </button>
-    </div>
+        <div class="pure-control-group">
+            <button class="pure-button" type="submit">
+                <i class="fa fa-fw fa-save"></i>
+                Save
+            </button>
+        </div>
+    </fieldset>
 </form>
 @endsection
 

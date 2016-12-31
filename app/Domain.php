@@ -19,5 +19,17 @@ class Domain extends Model
     {
         return $this->hasMany('App\Alias', 'domain', 'name');
     }
+
+    /**
+     * Find a domain by its name, or throw a NotFound exception,
+     */
+    public static function findByNameOrFail(string $name) : Domain
+    {
+        $domain = self::where('name', $name)
+            ->firstOrFail()
+        ;
+
+        return $domain;
+    }
 }
 

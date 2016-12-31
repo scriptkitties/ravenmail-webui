@@ -85,12 +85,17 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $name
+     * @param  string  $address
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($name, $address)
     {
-        //
+        $user = User::findByAddressOrFail($address);
+
+        return view('user.edit', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -100,9 +105,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $domain, $address)
     {
-        //
+        $user = User::findByAddressOrFail($address);
+
+        // update account details
+        if ($request->input('password', '') !== '') {
+            $user->password = Hash::make($request->input('password'));
+        }
+
+        // update privileges
+        $user->admin = $request->input('admin', false);
+        $user->active = $request->input('active', false);
+
+        // save the updated user
+        $user->save();
+
+        return redirect()->route('users.show', [
+            'domain' => $domain,
+            'user' => $address
+        ]);
     }
 
     /**
