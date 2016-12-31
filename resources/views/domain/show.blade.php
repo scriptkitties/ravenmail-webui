@@ -13,8 +13,12 @@
         </a>
     </li>
     <li>
-        <i class="fa fa-fw fa-mail-forward"></i>
-        {{ $domain->aliases()->count() }} email {{ str_plural('forwards', $domain->aliases()->count()) }}
+        <a href="{{ route('aliases.index', ['domain' => $domain->name]) }}">
+            <i class="fa fa-fw fa-mail-forward"></i>
+            {{ $domain->aliases()->count() }}
+            email
+            {{ str_plural('forwards', $domain->aliases()->count()) }}
+        </a>
     </li>
     <li>
         Domain is

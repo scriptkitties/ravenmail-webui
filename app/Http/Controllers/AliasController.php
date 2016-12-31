@@ -15,9 +15,16 @@ class AliasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(string $name)
     {
-        //
+        $aliases = Alias::where('domain', $name)
+            ->get()
+        ;
+
+        return view('alias.index', [
+            'domain' => $name,
+            'aliases' => $aliases
+        ]);
     }
 
     /**
