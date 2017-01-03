@@ -25,7 +25,7 @@
             </h1>
             @include('nav')
         </header>
-        @if($errors->count() > 0)
+        @if(count($errors) > 0)
             <aside>
                 <section class="error">
                     <ul>

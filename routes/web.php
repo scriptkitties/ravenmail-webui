@@ -20,6 +20,9 @@ Route::group(['middleware' => ['web']], function() {
     Route::group(['middleware' => ['auth']], function() {
         Route::get('/', 'DashboardController@getIndex')->name('dashboard');
 
+        Route::get('/password', 'PasswordController@edit')->name('password.edit');
+        Route::post('/password', 'PasswordController@update')->name('password.update');
+
         Route::group(['middleware' => ['admin']], function() {
             Route::resource('/domains', 'DomainController');
             Route::resource('/domains/{domain}/aliases', 'AliasController');
