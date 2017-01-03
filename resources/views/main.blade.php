@@ -41,7 +41,7 @@
         </main>
         <footer>
             <p>
-                &copy; 2016 - <a href="https://www.tyil.work">Patrick "tyil" Spek</a>
+                Ravenmail ESP WebUI - &copy; 2016 - <a href="https://www.tyil.work">Patrick "tyil" Spek</a>, licensed as GPLv3.
             </p>
             <p>
                 Icons from the <a href="http://fontawesome.io/">Font Awesome</a> icon set, licensed under <a href="http://scripts.sil.org/OFL">SIL OFL 1.1</a>.
