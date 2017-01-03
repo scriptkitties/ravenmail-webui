@@ -11,23 +11,21 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function() {
-    Route::get('/login', 'AuthController@getLogin')->middleware('guest')->name('login');
-    Route::get('/logout', 'AuthController@getLogout')->name('logout');
+Route::get('/login', 'AuthController@getLogin')->middleware('guest')->name('login');
+Route::get('/logout', 'AuthController@getLogout')->name('logout');
 
-    Route::post('/login', 'AuthController@postLogin')->middleware('guest')->name('login.post');
+Route::post('/login', 'AuthController@postLogin')->middleware('guest')->name('login.post');
 
-    Route::group(['middleware' => ['auth']], function() {
-        Route::get('/', 'DashboardController@getIndex')->name('dashboard');
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/', 'DashboardController@getIndex')->name('dashboard');
 
-        Route::get('/password', 'PasswordController@edit')->name('password.edit');
-        Route::post('/password', 'PasswordController@update')->name('password.update');
+    Route::get('/password', 'PasswordController@edit')->name('password.edit');
+    Route::post('/password', 'PasswordController@update')->name('password.update');
 
-        Route::group(['middleware' => ['admin']], function() {
-            Route::resource('/domains', 'DomainController');
-            Route::resource('/domains/{domain}/aliases', 'AliasController');
-            Route::resource('/domains/{domain}/users', 'UserController');
-        });
+    Route::group(['middleware' => ['admin']], function() {
+        Route::resource('/domains', 'DomainController');
+        Route::resource('/domains/{domain}/aliases', 'AliasController');
+        Route::resource('/domains/{domain}/users', 'UserController');
     });
 });
 
