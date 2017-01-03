@@ -12,10 +12,10 @@
 */
 
 Route::group(['middleware' => ['web']], function() {
-    Route::get('/login', 'AuthController@getLogin')->name('login');
+    Route::get('/login', 'AuthController@getLogin')->middleware('guest')->name('login');
     Route::get('/logout', 'AuthController@getLogout')->name('logout');
 
-    Route::post('/login', 'AuthController@postLogin')->name('login.post');
+    Route::post('/login', 'AuthController@postLogin')->middleware('guest')->name('login.post');
 
     Route::group(['middleware' => ['auth']], function() {
         Route::get('/', 'DashboardController@getIndex')->name('dashboard');
