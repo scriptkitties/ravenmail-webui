@@ -43,10 +43,6 @@ class AuthController extends Controller
             if (!$user->active) {
                 throw new \Exception('Account has been disabled');
             }
-
-            if (!$user->admin) {
-                throw new \Exception('Account has no access to the admin interface');
-            }
         } catch(\Exception $e) {
             return view('auth.login')->withErrors([$e->getMessage()]);
         }
