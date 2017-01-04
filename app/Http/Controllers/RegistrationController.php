@@ -86,6 +86,7 @@ class RegistrationController extends Controller
             }
         }
 
+        // check if any errors occurred
         if ($validator->errors()->any()) {
             return redirect()
                 ->back()
@@ -93,7 +94,6 @@ class RegistrationController extends Controller
                 ->withInput()
             ;
         }
-
 
         // create the new user
         $user = new User();
