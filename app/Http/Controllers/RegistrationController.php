@@ -73,7 +73,7 @@ class RegistrationController extends Controller
         ];
 
         foreach ($regexes as $regex) {
-            $result = preg_match($rexeg, $request->input('local'));
+            $result = preg_match($regex, $request->input('local'));
 
             if ($result === false) {
                 $validator->errors()->add('local', trans('registration.regex_error'));
