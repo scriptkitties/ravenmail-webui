@@ -41,7 +41,7 @@
     <li>Using the {{ config('app.name') }} service to break the law</li>
     <li>Encourage others to break the rules of this service</li>
     <li>Encourage others to break a law</li>
-    <li>Attempt to find or abuse bugs in the service without permission</li>
+    <li>Attempt to abuse bugs in the service without permission</li>
 </ul>
 @endsection
 
