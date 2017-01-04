@@ -40,20 +40,12 @@ class RegistrationController extends Controller
     {
         // apply basic form validation
         $validator = Validator::make($request->all(), [
-            'local' => 'required|max:64',
+            'local' => 'required|max:64', // todo: disallow leading and trailing dot
             'domain' => 'required|exists:domains,name',
             'password' => 'required',
             'password-verify' => 'required|same:password',
             'accept-tos' => 'required'
         ]);
-
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput()
-            ;
-        }
 
         $domain = Domain::findByNameOrFail($request->input('domain'));
 
@@ -62,12 +54,6 @@ class RegistrationController extends Controller
             $validator->errors()->add('domain', trans('validation.not_in', [
                 'attribute' => 'domain'
             ]));
-
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput()
-            ;
         }
 
         // disallow duplicate addresses
@@ -78,13 +64,36 @@ class RegistrationController extends Controller
 
         if ($count > 0) {
             $validator->errors()->add('local', trans('registration.dupe'));
+        }
 
+        // disallow illegal addresses
+        $regexes = [
+            '/^./',
+            '/.$/'
+        ];
+
+        foreach ($regexes as $regex) {
+            $result = preg_match($rexeg, $request->input('local'));
+
+            if ($result === false) {
+                $validator->errors()->add('local', trans('registration.regex_error'));
+                break;
+            }
+
+            if ($result > 0) {
+                $validator->errors()->add('local', trans('registration.illegal'));
+                break;
+            }
+        }
+
+        if ($validator->errors()->any()) {
             return redirect()
                 ->back()
                 ->withErrors($validator)
                 ->withInput()
             ;
         }
+
 
         // create the new user
         $user = new User();
