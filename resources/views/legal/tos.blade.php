@@ -25,7 +25,7 @@
 <p>
     All content sent through the {{ config('app.name') }} network is ownership
     of their respective account owners. Messages sent through the network do
-    not necesarily portray the opinion of the staff or contributors.
+    not necessarily portray the opinion of the staff or contributors.
 </p>
 
 <h2>Termination of your account</h2>
@@ -41,7 +41,7 @@
     <li>Using the {{ config('app.name') }} service to break the law</li>
     <li>Encourage others to break the rules of this service</li>
     <li>Encourage others to break a law</li>
-    <li>Attemt to find or abuse bugs in the service without permission</li>
+    <li>Attempt to find or abuse bugs in the service without permission</li>
 </ul>
 @endsection
 
