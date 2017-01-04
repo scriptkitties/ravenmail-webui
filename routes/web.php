@@ -11,13 +11,19 @@
 |
 */
 
-Route::get('/login', 'AuthController@getLogin')->middleware('guest')->name('login');
-Route::get('/logout', 'AuthController@getLogout')->name('logout');
+Route::get('/terms', 'LegalController@tos')->name('legal.tos');
 
-Route::post('/login', 'AuthController@postLogin')->middleware('guest')->name('login.post');
+Route::group(['middleware' => ['guest']], function() {
+    Route::get('/login', 'AuthController@getLogin')->name('login');
+    Route::post('/login', 'AuthController@postLogin')->name('login.post');
+
+    Route::get('/registration', 'RegistrationController@create')->name('registration.create');
+    Route::post('/registration', 'RegistrationController@store')->name('registration.store');
+});
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/', 'DashboardController@getIndex')->name('dashboard');
+    Route::get('/logout', 'AuthController@getLogout')->name('logout');
 
     Route::get('/password', 'PasswordController@edit')->name('password.edit');
     Route::post('/password', 'PasswordController@update')->name('password.update');

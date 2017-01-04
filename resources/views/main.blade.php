@@ -25,6 +25,13 @@
             </h1>
             @include('nav')
         </header>
+        @if(Session::has('success'))
+            <aside>
+                <section class="success">
+                    <p>{{ session('success') }}</p>
+                </section>
+            </aside>
+        @endif
         @if(count($errors) > 0)
             <aside>
                 <section class="error">
