@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Validator;
@@ -67,23 +69,12 @@ class RegistrationController extends Controller
         }
 
         // disallow illegal addresses
-        $regexes = [
-            '/^./',
-            '/.$/'
-        ];
-
-        foreach ($regexes as $regex) {
-            $result = preg_match($regex, $request->input('local'));
-
-            if ($result === false) {
-                $validator->errors()->add('local', trans('registration.regex_error'));
-                break;
-            }
-
-            if ($result > 0) {
+        try {
+            if (!User::checkValidLocal($request->input('local'))) {
                 $validator->errors()->add('local', trans('registration.illegal'));
-                break;
             }
+        } catch (Exception $e) {
+            $validator->errors()->add('application', trans('registration.regex_error'));
         }
 
         // check if any errors occurred
