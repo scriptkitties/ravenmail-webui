@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Domain;
 use App\Alias;
+use App\Domain;
+use App\Http\Requests;
+use App\NoregAddress;
 
 class AliasController extends Controller
 {
@@ -47,6 +48,12 @@ class AliasController extends Controller
      */
     public function store(Request $request, string $name)
     {
+        // apply basic form validation
+        $this->validate($request, [
+            'local' => 'required|max:64',
+            'destination' => 'required|min:2|max:255|email'
+        ]);
+
         $domain = Domain::findByNameOrFail($name);
 
         $alias = new Alias();
@@ -55,7 +62,22 @@ class AliasController extends Controller
         $alias->destination = $request->input('destination');
         $alias->save();
 
-        return redirect()->route('domains.show', [
+        if ($request->has('create-noreg') && $request->input('create-noreg')) {
+            $count = NoregAddress::where('local', $request->input('local'))
+                ->where('domain', $domain->name)
+                ->count()
+            ;
+
+            // avoid duplicate noreg entries
+            if ($count < 1) {
+                $noreg = new NoregAddress();
+                $noreg->local = $request->input('local');
+                $noreg->domain = $domain->name;
+                $noreg->save();
+            }
+        }
+
+        return redirect()->route('aliases.index', [
             'domain' => $domain->name
         ]);
     }
