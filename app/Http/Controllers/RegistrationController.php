@@ -58,19 +58,14 @@ class RegistrationController extends Controller
             ]));
         }
 
-        // disallow duplicate addresses
-        $count = User::where('local', $request->input('local'))
-            ->where('domain', $request->input('domain'))
-            ->count()
-        ;
-
-        if ($count > 0) {
+        // dont allow addresses considered unregisterable
+        if (!User::isRegisterable($request->input('local'), $request->input('domain'))) {
             $validator->errors()->add('local', trans('registration.dupe'));
         }
 
         // disallow illegal addresses
         try {
-            if (!User::checkValidLocal($request->input('local'))) {
+            if (!User::isValidLocal($request->input('local'))) {
                 $validator->errors()->add('local', trans('registration.illegal'));
             }
         } catch (Exception $e) {

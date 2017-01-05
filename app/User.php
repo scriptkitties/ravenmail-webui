@@ -7,23 +7,56 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Auth\Authenticatable as AuthenticatableTrait; 
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
+
+use App\NoregAddress;
 
 class User extends Model implements Authenticatable
 {
     use AuthenticatableTrait;
     use AddressTrait;
 
-    public $timestamps = false;
-
-    public function getDestinationAliases() : Collection
+    public function getDateFormat() : string
     {
-        $aliases = Alias::where('destination', $this->getAddress())->get();
-
-        return $aliases;
+        return 'Y-m-d H:i:s.u';
     }
 
-    public static function checkValidLocal(string $string) : bool
+    public static function isRegisterable(string $local, string $domain) : bool
+    {
+        // check for duplicate
+        $count = self::where('local', $local)
+            ->where('domain', $domain)
+            ->count()
+        ;
+
+        if ($count > 0) {
+            return false;
+        }
+
+        // check for local part on noreg list
+        $count = NoregAddress::where('local', $local)
+            ->where('domain', '')
+            ->count()
+        ;
+
+        if ($count > 0) {
+            return false;
+        }
+
+        // check for full address on noreg list
+        $count = NoregAddress::where('local', $local)
+            ->where('domain', $domain)
+            ->count()
+        ;
+
+        if ($count > 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function isValidLocal(string $string) : bool
     {
         $regexes = [
             '/^\./',
@@ -46,5 +79,12 @@ class User extends Model implements Authenticatable
         }
 
         return true;
+    }
+
+    public function getDestinationAliases() : Collection
+    {
+        $aliases = Alias::where('destination', $this->getAddress())->get();
+
+        return $aliases;
     }
 }
