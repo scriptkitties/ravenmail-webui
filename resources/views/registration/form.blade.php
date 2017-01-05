@@ -33,6 +33,15 @@
             </label>
         </div>
     </fieldset>
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="captcha">
+                Captcha<br>
+                {!! captcha_img() !!}
+                <input id="captcha" name="captcha" type="text" required>
+            </label>
+        </div>
+    </fieldset>
     <div class="pure-control-group">
         <div class="content-center">
             <button class="pure-button" type="submit">

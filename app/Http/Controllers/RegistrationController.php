@@ -46,7 +46,8 @@ class RegistrationController extends Controller
             'domain' => 'required|exists:domains,name',
             'password' => 'required',
             'password-verify' => 'required|same:password',
-            'accept-tos' => 'required'
+            'accept-tos' => 'required',
+            'captcha' => 'required|captcha'
         ]);
 
         $domain = Domain::findByNameOrFail($request->input('domain'));
