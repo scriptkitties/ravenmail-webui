@@ -6,7 +6,7 @@
     <fieldset>
         <div class="pure-control-group">
             <label for="local">Local part</label>
-            <input id="local" name="local" type="text" required>
+            <input id="local" name="local" type="text" value="{{ old('local') }}" required>
         </div>
         <div class="pure-control-group">
             <label for="domain">Domain name</label>
@@ -18,11 +18,11 @@
         </div>
         <div class="pure-control-group">
             <label for="password">Password</label>
-            <input id="password" name="password" type="password" required>
+            <input id="password" name="password" type="password" value="{{ old('password') }}" required>
         </div>
         <div class="pure-control-group">
             <label for="password-verify">Verify password</label>
-            <input id="password-verify" name="password-verify" type="password" required>
+            <input id="password-verify" name="password-verify" type="password" value="{{ old('password') }}" required>
         </div>
     </fieldset>
     <fieldset>
