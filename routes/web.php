@@ -17,16 +17,14 @@ Route::group(['middleware' => ['guest']], function() {
     Route::get('/login', 'AuthController@getLogin')->name('login');
     Route::post('/login', 'AuthController@postLogin')->name('login.post');
 
-    Route::get('/registration', 'RegistrationController@create')->name('registration.create');
-    Route::post('/registration', 'RegistrationController@store')->name('registration.store');
+    Route::resource('/user', 'UserController', ['only' => ['create', 'store']]);
 });
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/', 'DashboardController@getIndex')->name('dashboard');
     Route::get('/logout', 'AuthController@getLogout')->name('logout');
 
-    Route::get('/password', 'PasswordController@edit')->name('password.edit');
-    Route::post('/password', 'PasswordController@update')->name('password.update');
+    Route::resource('/user', 'UserController', ['except' => ['index', 'create', 'store', 'destroy']]);
 
     Route::group([
         'middleware' => ['admin'],

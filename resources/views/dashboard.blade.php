@@ -5,7 +5,7 @@
 <h3>Account actions</h3>
 <ul class="pure-menu-list">
     <li class="pure-menu-item">
-        <a class="pure-menu-link" href="{{ route('password.edit') }}">
+        <a class="pure-menu-link" href="{{ route('user.edit', ['user' => Auth::user()->getAddress()]) }}">
             <i class="fa fa-fw fa-lock"></i> Change password
         </a>
     </li>

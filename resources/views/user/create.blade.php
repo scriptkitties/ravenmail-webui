@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('content')
-<form class="pure-form pure-form-stacked" method="post" action="{{ route('registration.store') }}">
+<form class="pure-form pure-form-stacked" method="post" action="{{ route('user.store') }}">
     {{ csrf_field() }}
     <fieldset>
         <div class="pure-control-group">
