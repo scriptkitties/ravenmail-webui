@@ -13,7 +13,7 @@
 <h3>Account stats</h3>
 <ul>
     <li>
-        Account created on {{ Auth::user()->created_at }}
+        Account created on <strong>{{ Auth::user()->created_at }}</strong>
     </li>
 </ul>
 @if(Auth::user()->admin)
