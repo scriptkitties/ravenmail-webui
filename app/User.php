@@ -16,11 +16,6 @@ class User extends Model implements Authenticatable
     use AuthenticatableTrait;
     use AddressTrait;
 
-    public function getDateFormat() : string
-    {
-        return 'Y-m-d H:i:s.u';
-    }
-
     public static function isRegisterable(string $local, string $domain) : bool
     {
         // check for duplicate
