@@ -8,5 +8,5 @@ class Alias extends Model
 {
     use AddressTrait;
 
-    public $timestamps = false;
+    const UPDATED_AT = null;
 }

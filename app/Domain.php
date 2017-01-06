@@ -8,7 +8,6 @@ class Domain extends Model
 {
     protected $primaryKey = 'name';
     public $incrementing = false;
-    public $timestamps = false;
 
     public function users()
     {
