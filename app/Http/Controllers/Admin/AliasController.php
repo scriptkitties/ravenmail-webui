@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Alias;
@@ -22,7 +23,7 @@ class AliasController extends Controller
             ->get()
         ;
 
-        return view('alias.index', [
+        return view('domain.alias.index', [
             'domain' => $name,
             'aliases' => $aliases
         ]);
@@ -35,7 +36,7 @@ class AliasController extends Controller
      */
     public function create(string $name)
     {
-        return view('alias.create', [
+        return view('domain.alias.create', [
             'domain' => $name
         ]);
     }
@@ -77,43 +78,9 @@ class AliasController extends Controller
             }
         }
 
-        return redirect()->route('aliases.index', [
+        return redirect()->route('domain.alias.index', [
             'domain' => $domain->name
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**
@@ -127,7 +94,7 @@ class AliasController extends Controller
         $alias = Alias::findByAddressOrFail($address);
         $alias->delete();
 
-        return redirect()->route('aliases.index', [
+        return redirect()->route('domain.alias.index', [
             'domain' => $domain
         ]);
     }

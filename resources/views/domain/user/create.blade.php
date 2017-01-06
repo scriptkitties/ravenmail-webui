@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('content')
-<form class="pure-form pure-form-aligned" method="post" action="{{ route('users.store', ['domain' => $domain->name]) }}">
+<form class="pure-form pure-form-aligned" method="post" action="{{ route('domain.user.store', ['domain' => $domain->name]) }}">
     {{ csrf_field() }}
     <fieldset>
     <div class="pure-control-group">

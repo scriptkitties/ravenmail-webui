@@ -4,7 +4,7 @@
 <h2>Aliases</h2>
 <section>
     <p>
-        <a class="pure-button" href="{{ route('aliases.create', ['domain' => $domain]) }}"><i class="fa fa-plus"></i> Add alias</a>
+        <a class="pure-button" href="{{ route('domain.alias.create', ['domain' => $domain]) }}"><i class="fa fa-plus"></i> Add alias</a>
     </p>
 </section>
 <table class="pure-table pure-table-striped">
@@ -21,7 +21,7 @@
                 <td>{{ $alias->getAddress() }}</td>
                 <td>{{ $alias->destination }}</td>
                 <td>
-                    <form method="post" action="{{ route('aliases.destroy', ['domain' => $alias->domain, 'address' => $alias->getAddress()]) }}">
+                    <form method="post" action="{{ route('domain.alias.destroy', ['domain' => $alias->domain, 'address' => $alias->getAddress()]) }}">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
                         <button class="pure-button" type="submit">

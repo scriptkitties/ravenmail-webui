@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Domain;
@@ -46,7 +47,7 @@ class DomainController extends Controller
 
         if ($count > 0) {
             // TODO: show this error somehow
-            return redirect(route('domains.index'))->withErrors(
+            return redirect(route('domain.index'))->withErrors(
                 ['Domain already exists']
             );
         }
@@ -56,7 +57,7 @@ class DomainController extends Controller
         $domain->public = $request->has('public');
         $domain->save();
 
-        return redirect(route('domains.index'));
+        return redirect(route('domain.index'));
     }
 
     /**
@@ -115,7 +116,7 @@ class DomainController extends Controller
         $domain->public = $request->has('public');
         $domain->save();
 
-        return redirect(route('domains.show', ['name' => $domain->name]));
+        return redirect(route('domain.show', ['name' => $domain->name]));
     }
 
     /**
@@ -140,7 +141,7 @@ class DomainController extends Controller
 
         $domain->delete();
 
-        return redirect(route('domains.index'));
+        return redirect(route('domain.index'));
     }
 }
 

@@ -2,7 +2,7 @@
 
 @section('content')
 <h2>Edit {{ $domain->name }}</h2>
-<form class="pure-form pure-form-aligned" method="post" action="{{ route('domains.update', ['name' => $domain->name]) }}">
+<form class="pure-form pure-form-aligned" method="post" action="{{ route('domain.update', ['name' => $domain->name]) }}">
     {{ csrf_field() }}
     {{ method_field('PUT') }}
     <fieldset>

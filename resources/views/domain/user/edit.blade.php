@@ -2,7 +2,7 @@
 
 @section('content')
 <h2>Edit {{ $user->getAddress() }}</h2>
-<form method="post" action="{{ route('users.update', ['name' => $user->domain, 'address' => $user->getAddress()]) }}">
+<form method="post" action="{{ route('domain.user.update', ['name' => $user->domain, 'address' => $user->getAddress()]) }}">
     {{ csrf_field() }}
     {{ method_field('PUT') }}
     <h2>Account details</h2>

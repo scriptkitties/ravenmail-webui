@@ -23,7 +23,7 @@
     </li>
 </ul>
 <p>
-    <a class="pure-button" href="{{ route('users.edit', ['name' => $user->domain, 'address' => $user->getAddress()]) }}">
+    <a class="pure-button" href="{{ route('domain.user.edit', ['name' => $user->domain, 'address' => $user->getAddress()]) }}">
         <i class="fa fa-fw fa-pencil"></i> Edit user
     </a>
 </p>
@@ -32,7 +32,7 @@
 <ul>
 @forelse($user->getDestinationAliases() as $alias)
     <li>
-        <a href="{{ route('aliases.show', ['name' => $user->domain, 'address' => $alias->getAddress()]) }}">
+        <a href="{{ route('domain.alias.show', ['name' => $user->domain, 'address' => $alias->getAddress()]) }}">
             {{ $alias->getAddress() }}
         </a>
     </li>
@@ -43,7 +43,7 @@
 
 <h3>Remove user</h3>
 <div class="warning">
-    <form method="post" action="{{ route('users.destroy', ['name' => $user->domain, 'address' => $user->getAddress()]) }}">
+    <form method="post" action="{{ route('domain.user.destroy', ['name' => $user->domain, 'address' => $user->getAddress()]) }}">
         {{ csrf_field() }}
         {{ method_field('DELETE') }}
         <p>

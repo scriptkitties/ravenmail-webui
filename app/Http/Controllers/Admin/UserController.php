@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,7 +22,7 @@ class UserController extends Controller
     {
         $domain = Domain::where('name', $name)->firstOrFail();
 
-        return view('user.index', [
+        return view('domain.user.index', [
             'domain' => $domain
         ]);
     }
@@ -36,7 +37,7 @@ class UserController extends Controller
     {
         $domain = Domain::where('name', $name)->firstOrFail();
 
-        return view('user.create', [
+        return view('domain.user.create', [
             'domain' => $domain
         ]);
     }
@@ -77,7 +78,7 @@ class UserController extends Controller
     {
         $user = User::findByAddressOrFail($address);
 
-        return view ('user.show', [
+        return view ('domain.user.show', [
             'user' => $user
         ]);
     }
@@ -93,7 +94,7 @@ class UserController extends Controller
     {
         $user = User::findByAddressOrFail($address);
 
-        return view('user.edit', [
+        return view('domain.user.edit', [
             'user' => $user
         ]);
     }
@@ -121,7 +122,7 @@ class UserController extends Controller
         // save the updated user
         $user->save();
 
-        return redirect()->route('users.show', [
+        return redirect()->route('domain.users.show', [
             'domain' => $domain,
             'user' => $address
         ]);
@@ -142,7 +143,7 @@ class UserController extends Controller
         $user = User::findByAddressOrFail($address);
         $user->delete();
 
-        return redirect()->route('users.index', [
+        return redirect()->route('domain.users.index', [
             'domain' => $user->domain
         ]);
     }
