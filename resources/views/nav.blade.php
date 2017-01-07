@@ -1,6 +1,7 @@
 <nav class="pure-menu pure-menu-horizontal">
     <ul class="pure-menu-list">
         @if(Auth::check())
+            <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('dashboard') }}">dashboard</a></li>
             @if(Auth::user()->admin)
                 <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('domain.index') }}">domains</a></li>
             @endif
