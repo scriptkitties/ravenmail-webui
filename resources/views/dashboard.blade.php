@@ -2,6 +2,9 @@
 
 @section('content')
 <h2>Dashboard</h2>
+<p>
+    You are curently logged in as <strong>{{ Auth::user()->getAddress() }}</strong>.
+</p>
 <h3>Account actions</h3>
 <ul class="pure-menu-list">
     <li class="pure-menu-item">
