@@ -15,7 +15,6 @@ class CreateVerificationsTable extends Migration
     {
         Schema::create('verifications', function (Blueprint $table) {
             $table->uuid('uuid');
-            $table->string('code', 12);
             $table->timestamps();
 
             $table->primary('uuid');
