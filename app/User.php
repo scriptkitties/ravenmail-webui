@@ -16,6 +16,14 @@ class User extends Model implements Authenticatable
     use AuthenticatableTrait;
     use AddressTrait;
 
+    public function aliases()
+    {
+        return Alias::where('local', $this->local)
+            ->where('domain', $this->domain)
+            ->get()
+        ;
+    }
+
     public static function isRegisterable(string $local, string $domain) : bool
     {
         // check for duplicate

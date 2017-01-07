@@ -25,6 +25,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/logout', 'AuthController@getLogout')->name('logout');
 
     Route::resource('/user', 'UserController', ['except' => ['index', 'create', 'store', 'destroy']]);
+    Route::resource('/user.alias', 'User\AliasController', ['except' => 'show', 'edit', 'update']);
+    Route::resource('/user.alias.verify', 'VerificationController', ['only' => 'update', 'patch']);
 
     Route::group([
         'middleware' => ['admin'],
