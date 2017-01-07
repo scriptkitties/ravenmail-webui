@@ -16,7 +16,7 @@ class CreateNoregAddressesTable extends Migration
         Schema::create('noreg_addresses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('local', 64)->default('');
-            $table->string('domain', 255);
+            $table->string('domain', 255)->nullable();
             $table->timestamps();
 
             $table->unique(['local', 'domain']);
