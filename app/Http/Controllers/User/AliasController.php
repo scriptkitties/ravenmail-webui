@@ -12,6 +12,7 @@ use Validator;
 
 use App\Alias;
 use App\Mail\VerifyAlias;
+use App\Verification;
 
 class AliasController extends Controller
 {
