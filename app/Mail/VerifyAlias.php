@@ -20,11 +20,10 @@ class VerifyAlias extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user, Alias $alias, Verification $verification)
+    public function __construct(User $user, Alias $alias)
     {
         $this->user = $user;
         $this->alias = $alias;
-        $this->verification = $verification;
     }
 
     /**
@@ -38,12 +37,12 @@ class VerifyAlias extends Mailable
             ->text('mail.alias.verify')
             ->with([
                 'origin' => $this->user->getAddress(),
-                'destination' => $this->destination->getAddress(),
+                'destination' => $this->alias->destination,
+                'domain' => $this->user->domain()->name,
                 'contact' => $this->user->domain()->contact,
-                'url' => route('user.alias.verify.index', [
-                    'user' => $this->user->getAddress(),
-                    'alias' => $this->alias->getAddress(),
-                    'uuid' => $this->verification->uuid
+                'url' => route('verify', [
+                    'type' => 'alias',
+                    'uuid' => $this->alias->verification
                 ]),
             ])
         ;
