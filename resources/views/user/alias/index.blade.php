@@ -4,7 +4,7 @@
 <h2>Aliases</h2>
 <section>
     <p>
-        @if(!$user->admin &&$alias->count() > $max)
+        @if(!$user->admin && $user->aliases()->count() > $max)
             You have reached the maximum number of aliases for your account.
         @else
             <a class="pure-button" href="{{ route('user.alias.create', ['user' => $user->getAddress()]) }}">
