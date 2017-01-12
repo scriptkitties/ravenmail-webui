@@ -6,22 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Domain extends Model
 {
-    protected $primaryKey = 'name';
-    public $incrementing = false;
-
     public function aliases()
     {
         return $this->hasMany('App\Alias', 'domain', 'name');
     }
 
-    public function users()
-    {
-        return $this->hasMany('App\User', 'domain', 'name');
-    }
-
     public function contact()
     {
         return User::findByAddressOrFail($this->attributes['contact']);
+    }
+
+    public function moderators()
+    {
+        return $this->belongsToMany('App\User', 'domain_moderators');
+    }
+
+    public function users()
+    {
+        return $this->hasMany('App\User', 'domain', 'name');
     }
 
     /**

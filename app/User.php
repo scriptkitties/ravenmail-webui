@@ -29,6 +29,11 @@ class User extends Model implements Authenticatable
         return Domain::findByNameOrFail($this->attributes['domain']);
     }
 
+    public function domainsModerating()
+    {
+        return $this->belongsToMany('App\Domain', 'domain_moderators');
+    }
+
     public static function isRegisterable(string $local, string $domain) : bool
     {
         // check for duplicate
