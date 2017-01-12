@@ -25,6 +25,12 @@
             Your account holds <strong>admin</strong> status. Congratulations!
         </li>
     @endif
+    @if($user->domainsModerating->count() > 0)
+        <li>
+            Your account holds moderator status over
+            {{ str_plural('domain', $user->domainsModerating->count()) }}
+        </li>
+    @endif
     <li>
         Account created on <strong>{{ $user->created_at }}</strong>.
     </li>
