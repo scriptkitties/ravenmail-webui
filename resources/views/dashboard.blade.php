@@ -12,6 +12,11 @@
             <i class="fa fa-fw fa-lock"></i> Change password
         </a>
     </li>
+    <li class="pure-menu-item">
+        <a class="pure-menu-link" href="{{ route('user.alias.index', ['user' => Auth::user()->getAddress()]) }}">
+            <i class="fa fa-fw fa-mail-forward"></i> Manage aliases
+        </a>
+    </li>
 </ul>
 <h3>Account stats</h3>
 <ul>

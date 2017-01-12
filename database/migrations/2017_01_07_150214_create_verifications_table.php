@@ -32,6 +32,10 @@ class CreateVerificationsTable extends Migration
      */
     public function down()
     {
+        Schema::table('aliases', function (Blueprint $table) {
+            $table->dropForeign('aliases_verification_foreign');
+        });
+
         Schema::drop('verifications');
     }
 }

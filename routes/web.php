@@ -23,8 +23,10 @@ Route::group(['middleware' => ['guest']], function() {
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/', 'DashboardController@getIndex')->name('dashboard');
     Route::get('/logout', 'AuthController@getLogout')->name('logout');
+    Route::get('/verify/{type}/{uuid}', 'VerificationController@getIndex')->name('verify');
 
     Route::resource('/user', 'UserController', ['except' => ['index', 'create', 'store', 'destroy']]);
+    Route::resource('/user.alias', 'User\AliasController', ['except' => 'show', 'edit', 'update']);
 
     Route::group([
         'middleware' => ['admin'],
