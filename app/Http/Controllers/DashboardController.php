@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests;
 use App\Domain;
@@ -21,6 +22,7 @@ class DashboardController extends Controller
             'aliases' => $aliases,
             'domains' => $domains,
             'users' => $users,
+            'user' => Auth::user(),
         ]);
     }
 }
