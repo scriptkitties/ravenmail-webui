@@ -2,7 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
-class TestUserSeeder extends Seeder
+use App\Domain;
+
+class DomainSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,12 +19,6 @@ class TestUserSeeder extends Seeder
             'contact' => 'test@test.test'
         ]);
 
-        DB::table('users')->insert([
-            'local' => 'test',
-            'domain' => 'test.test',
-            'password' => bcrypt('test'),
-            'admin' => true,
-            'active' => true,
-        ]);
+        factory(Domain::class, rand(5, 15))->create();
     }
 }
