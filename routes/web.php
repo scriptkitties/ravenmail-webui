@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth']], function() {
     ], function() {
         Route::resource('/domain', 'DomainController');
         Route::resource('/domain.alias', 'AliasController');
+        Route::resource('/domain.moderator', 'ModeratorController');
         Route::resource('/domain.user', 'UserController');
     });
 });
