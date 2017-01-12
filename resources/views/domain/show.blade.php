@@ -21,6 +21,13 @@
         </a>
     </li>
     <li>
+        <a href="{{ route('domain.moderator.index', ['domain' => $domain->name]) }}">
+            <i class="fa fa-fw fa-bolt"></i>
+            {{ $domain->moderators()->count() }}
+            domain
+            {{ str_plural('moderators', $domain->aliases()->count()) }}
+        </a>
+    <li>
         Domain is
         @if ($domain->public)
             <strong>public</strong>
