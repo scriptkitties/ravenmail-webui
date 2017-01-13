@@ -27,8 +27,9 @@
     @endif
     @if($user->domainsModerating->count() > 0)
         <li>
-            Your account holds moderator status over
-            {{ str_plural('domain', $user->domainsModerating->count()) }}
+            Your account holds <strong>moderator</strong> status over
+            <strong>{{ $user->domainsModerating->count() }}</strong>
+            {{ str_plural('domain', $user->domainsModerating->count()) }}.
         </li>
     @endif
     <li>
