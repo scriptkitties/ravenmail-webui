@@ -14,6 +14,7 @@
 use App\Alias;
 use App\Domain;
 use App\DomainModerator;
+use App\NoregAddress;
 use App\User;
 
 $factory->define(Alias::class, function (Faker\Generator $faker) {
@@ -47,6 +48,12 @@ $factory->define(Domain::class, function (Faker\Generator $faker) {
 $factory->define(DomainModerator::class, function (Faker\Generator $faker) {
     return [
         'admin' => (rand(0, 1) === 0),
+    ];
+});
+
+$factory->define(NoregAddress::class, function (Faker\Generator $faker) {
+    return [
+        'local' => $faker->userName,
     ];
 });
 
