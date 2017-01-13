@@ -42,6 +42,11 @@ class DomainController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'domain' => 'required|min:2|max:255',
+            'contact' => 'required|max:256',
+        ]);
+
         $name = $request->input('domain');
         $count = Domain::where('name', $name)->count();
 
@@ -54,6 +59,7 @@ class DomainController extends Controller
 
         $domain = new Domain();
         $domain->name = $request->input('domain');
+        $domain->contact = $request->input('contact');
         $domain->public = $request->has('public');
         $domain->save();
 
