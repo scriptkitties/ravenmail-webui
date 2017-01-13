@@ -13,6 +13,7 @@
 
 use App\Alias;
 use App\Domain;
+use App\DomainModerator;
 use App\User;
 
 $factory->define(Alias::class, function (Faker\Generator $faker) {
@@ -40,6 +41,12 @@ $factory->define(Domain::class, function (Faker\Generator $faker) {
         'name' => $faker->domainName,
         'public' => true,
         'contact' => 'test@test.test',
+    ];
+});
+
+$factory->define(DomainModerator::class, function (Faker\Generator $faker) {
+    return [
+        'admin' => (rand(0, 1) === 0),
     ];
 });
 
