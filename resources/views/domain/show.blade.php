@@ -17,7 +17,7 @@
             <i class="fa fa-fw fa-mail-forward"></i>
             {{ $domain->aliases()->count() }}
             email
-            {{ str_plural('forwards', $domain->aliases()->count()) }}
+            {{ str_plural('forward', $domain->aliases()->count()) }}
         </a>
     </li>
     <li>
@@ -25,7 +25,7 @@
             <i class="fa fa-fw fa-bolt"></i>
             {{ $domain->moderators()->count() }}
             domain
-            {{ str_plural('moderators', $domain->aliases()->count()) }}
+            {{ str_plural('moderator', $domain->moderators()->count()) }}
         </a>
     <li>
         Domain is
