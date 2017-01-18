@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
+use App;
 use App\Domain;
 use App\Http\Requests;
 
@@ -17,7 +19,18 @@ class DomainController extends Controller
      */
     public function index()
     {
-        $domains = Domain::orderBy('name')->get();
+        $user = Auth::user();
+
+        if ($user->admin) {
+           $domains = Domain::orderBy('name')->get();
+        } else {
+            $domains = $user->domainsModerating()->orderBy('name')->get();
+
+            // someone who's not moderating any domains has no right to be here
+            if ($domains->count() < 1) {
+                App::abort(403);
+            }
+        }
 
         return view('domain.index', [
             'domains' => $domains
@@ -31,6 +44,8 @@ class DomainController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Domain::class);
+
         return view('domain.create');
     }
 
@@ -42,6 +57,8 @@ class DomainController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Domain::class);
+
         $this->validate($request, [
             'domain' => 'required|min:2|max:255',
             'contact' => 'required|max:256',
@@ -75,6 +92,7 @@ class DomainController extends Controller
     public function show($name)
     {
         $domain = Domain::where('name', $name)->first();
+        $this->authorize('view', $domain);
 
         if ($domain === null) {
             return App::abort(404);
@@ -94,6 +112,7 @@ class DomainController extends Controller
     public function edit($name)
     {
         $domain = Domain::where('name', $name)->first();
+        $this->authorize('update', $domain);
 
         if ($domain === null) {
             return App::abort(404);
@@ -114,6 +133,7 @@ class DomainController extends Controller
     public function update(Request $request, $name)
     {
         $domain = Domain::where('name', $name)->first();
+        $this->authorize('update', $domain);
 
         if ($domain === null) {
             return App::abort(404);
@@ -134,6 +154,7 @@ class DomainController extends Controller
     public function destroy(Request $request, $name)
     {
         $domain = Domain::where('name', $name)->first();
+        $this->authorize('delete', $domain);
 
         if ($domain === null) {
             return App::abort(404);
@@ -143,6 +164,18 @@ class DomainController extends Controller
             return view('domain.show', ['domain' => $domain])->withErrors(
                 ['You must confirm this action']
             );
+        }
+
+        foreach ($domain->aliases as $alias) {
+            $alias->delete();
+        }
+
+        foreach ($domain->noreg_addresses as $noreg) {
+            $noreg->delete();
+        }
+
+        foreach ($domain->users as $user) {
+            $user->delete();
         }
 
         $domain->delete();

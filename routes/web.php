@@ -29,7 +29,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('/user.alias', 'User\AliasController', ['except' => 'show', 'edit', 'update']);
 
     Route::group([
-        'middleware' => ['admin'],
         'namespace' => 'Admin'
     ], function() {
         Route::resource('/domain', 'DomainController');

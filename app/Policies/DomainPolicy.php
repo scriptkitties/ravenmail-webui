@@ -10,7 +10,7 @@ class DomainPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user, Domain $domain)
+    public function before(User $user, $domain)
     {
         if ($user->admin) {
             return true;
@@ -24,7 +24,7 @@ class DomainPolicy
      * @param  \App\Domain  $domain
      * @return mixed
      */
-    public function view(User $user, Domain $domain)
+    public function view(User $user, Domain $domain) : bool
     {
         if ($domain->moderators()
             ->where('user_id', $user->id)
@@ -32,6 +32,8 @@ class DomainPolicy
         ) {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -40,7 +42,7 @@ class DomainPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user) : bool
     {
         return false;
     }
@@ -52,15 +54,17 @@ class DomainPolicy
      * @param  \App\Domain  $domain
      * @return mixed
      */
-    public function update(User $user, Domain $domain)
+    public function update(User $user, Domain $domain) : bool
     {
         if ($domain->moderators()
-            ->where('admin', true)
+            ->where('domain_moderators.admin', true)
             ->where('user_id', $user->id)
             ->count() > 0
         ) {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -70,7 +74,7 @@ class DomainPolicy
      * @param  \App\Domain  $domain
      * @return mixed
      */
-    public function delete(User $user, Domain $domain)
+    public function delete(User $user, Domain $domain) : bool
     {
         return false;
     }
