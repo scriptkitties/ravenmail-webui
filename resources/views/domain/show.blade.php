@@ -27,6 +27,10 @@
             domain
             {{ str_plural('moderator', $domain->moderators()->count()) }}
         </a>
+    </li>
+    <li>
+        Domain's contact is <a href="mailto:{{ $domain->contact }}">{{ $domain->contact }}</a>.
+    </li>
     <li>
         Domain is
         @if ($domain->public)
