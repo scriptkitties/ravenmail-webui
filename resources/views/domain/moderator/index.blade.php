@@ -29,10 +29,17 @@
                         @endif
                     </td>
                     <td>
+                        <a href="{{ route('domain.moderator.edit', [
+                            'name' => $domain->name,
+                            'address' => $moderator->user->getAddress(),
+                        ]) }}" class="pure-button">
+                            <i class="fa fa-fw fa-pencil"></i>
+                            Edit
+                        </a>
                         <form method="post" action="{{ route('domain.moderator.destroy', [
                             'domain' => $domain->name,
                             'moderator' => $moderator->user->getAddress()
-                        ]) }}">
+                        ]) }}" style="display: inline">
                             {{ csrf_field() }}
                             {{ method_field('delete') }}
                             <button class="pure-button" type="submit">

@@ -96,9 +96,13 @@ class ModeratorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(string $name, string $address)
     {
-        // NYI
+        $dm = DomainModerator::findByCredsOrFail($name, $address);
+
+        return view('domain.moderator.edit', [
+            'moderator' => $dm,
+        ]);
     }
 
     /**
@@ -108,9 +112,17 @@ class ModeratorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $name, string $address)
     {
-        // NYI
+        $dm = DomainModerator::findByCredsOrFail($name, $address);
+        $dm->admin = ($request->has('admin') === true);
+        $dm->save();
+
+        return redirect()->route('domain.moderator.index', [
+            'name' => $dm->domain->name,
+        ])->withSuccess(trans('moderator.updated', [
+            'user' => $dm->user->getAddress(),
+        ]));
     }
 
     /**
