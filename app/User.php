@@ -13,8 +13,12 @@ use App\NoregAddress;
 
 class User extends Model implements Authenticatable
 {
-    use AuthenticatableTrait;
     use AddressTrait;
+    use AuthenticatableTrait;
+    use UuidTrait;
+
+    public $incrementing = false;
+    protected $primaryKey = 'uuid';
 
     public function aliases()
     {

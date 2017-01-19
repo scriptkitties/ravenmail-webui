@@ -9,6 +9,11 @@ use App\DomainModerator;
 
 class Domain extends Model
 {
+    use UuidTrait;
+
+    public $incrementing = false;
+    protected $primaryKey = 'uuid';
+
     public function aliases()
     {
         return $this->hasMany('App\Alias', 'domain', 'name');
