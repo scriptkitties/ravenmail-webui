@@ -91,17 +91,6 @@ class ModeratorController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -109,7 +98,7 @@ class ModeratorController extends Controller
      */
     public function edit($id)
     {
-        //
+        // NYI
     }
 
     /**
@@ -121,7 +110,7 @@ class ModeratorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // NYI
     }
 
     /**
@@ -130,8 +119,22 @@ class ModeratorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, string $name, string $address)
     {
-        //
+        $domain = Domain::findByNameOrFail($name);
+        $user = User::findByAddressOrFail($address);
+        $dm = DomainModerator::where('domain_id', $domain->id)
+            ->where('user_id', $user->id)
+            ->firstOrFail()
+        ;
+
+        $dm->delete();
+
+        return redirect()->route('domain.moderator.index', [
+            'name' => $domain->name,
+        ])->withSuccess(trans('moderator.deleted', [
+            'domain' => $domain->name,
+            'user' => $user->getAddress(),
+        ]));
     }
 }
