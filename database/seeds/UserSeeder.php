@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 
 use App\User;
 use App\Domain;
+use Webpatser\Uuid\Uuid;
 
 class UserSeeder extends Seeder
 {
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('domain_moderators')->insert([
+            'uuid' => Uuid::generate(4)->string,
             'domain_id' => Domain::findByNameOrFail('test.test')->id,
             'user_id' => User::findByAddressOrFail('admin@test.test')->id,
             'admin' => true,
@@ -48,6 +50,7 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('domain_moderators')->insert([
+            'uuid' => Uuid::generate(4)->string,
             'domain_id' => Domain::findByNameOrFail('test.test')->id,
             'user_id' => User::findByAddressOrFail('mod@test.test')->id,
             'admin' => false,

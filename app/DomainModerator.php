@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Domain;
-use App\User;
-
 class DomainModerator extends Model
 {
+    use UuidTrait;
+
     public $incrementing = false;
+    protected $primaryKey = 'uuid';
 
     public function domain()
     {

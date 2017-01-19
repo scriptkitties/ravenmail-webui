@@ -14,6 +14,7 @@ class CreateDomainModeratorsTable extends Migration
     public function up()
     {
         Schema::create('domain_moderators', function (Blueprint $table) {
+            $table->uuid('uuid');
             $table->integer('domain_id');
             $table->integer('user_id');
             $table->boolean('admin')->default(false);
