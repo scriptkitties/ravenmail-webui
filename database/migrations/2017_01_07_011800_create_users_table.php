@@ -16,16 +16,21 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('uuid');
             $table->string('local', 64);
-            $table->string('domain', 255);
+            $table->uuid('domain_uuid');
             $table->string('password', 60);
             $table->boolean('admin')->default(false);
-            $table->boolean('active')->default(true);
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->unique(['local', 'domain']);
+            $table->primary('uuid');
+            $table->unique(['local', 'domain_uuid']);
 
-            $table->foreign('domain')->references('name')->on('domains');
+            $table->foreign('domain_uuid')
+                ->references('uuid')
+                ->on('domains')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

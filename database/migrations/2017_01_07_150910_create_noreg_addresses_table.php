@@ -15,13 +15,21 @@ class CreateNoregAddressesTable extends Migration
     {
         Schema::create('noreg_addresses', function (Blueprint $table) {
             $table->uuid('uuid');
-            $table->string('local', 64)->default('');
-            $table->string('domain', 255)->nullable();
+            $table->string('local', 64);
+            $table->uuid('domain_uuid');
             $table->timestamps();
 
-            $table->unique(['local', 'domain']);
+            $table->primary('uuid');
+            $table->unique(['local', 'domain_uuid']);
 
-            $table->foreign('domain')->references('name')->on('domains');
+            $table->index('local');
+            $table->index('domain_uuid');
+
+            $table->foreign('domain_uuid')
+                ->references('uuid')
+                ->on('domains')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

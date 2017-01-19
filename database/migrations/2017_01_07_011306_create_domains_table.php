@@ -20,6 +20,7 @@ class CreateDomainsTable extends Migration
             $table->string('contact', 256);
             $table->timestamps();
 
+            $table->primary('uuid');
             $table->unique('name');
         });
     }

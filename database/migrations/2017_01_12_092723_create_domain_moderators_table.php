@@ -15,10 +15,28 @@ class CreateDomainModeratorsTable extends Migration
     {
         Schema::create('domain_moderators', function (Blueprint $table) {
             $table->uuid('uuid');
-            $table->integer('domain_id');
-            $table->integer('user_id');
+            $table->uuid('domain_uuid');
+            $table->uuid('user_uuid');
             $table->boolean('admin')->default(false);
             $table->timestamps();
+
+            $table->primary('uuid');
+            $table->unique(['domain_uuid', 'user_uuid']);
+
+            $table->index('domain_uuid');
+            $table->index('user_uuid');
+
+            $table->foreign('domain_uuid')
+                ->references('uuid')
+                ->on('domains')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('user_uuid')
+                ->references('uuid')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

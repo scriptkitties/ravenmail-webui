@@ -16,16 +16,26 @@ class CreateAliasesTable extends Migration
         Schema::create('aliases', function (Blueprint $table) {
             $table->uuid('uuid');
             $table->string('local', 64);
-            $table->string('domain', 255);
+            $table->uuid('domain_uuid', 255);
             $table->string('destination', 256);
             $table->boolean('userset')->default(true);
-            $table->boolean('active')->default(false);
-            $table->uuid('verification')->nullable();
+            $table->uuid('verification_uuid');
             $table->timestamps();
 
+            $table->primary('uuid');
             $table->index('destination');
 
-            $table->foreign('domain')->references('name')->on('domains');
+            $table->foreign('domain_uuid')
+                ->references('uuid')
+                ->on('domains')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('verification_uuid')
+                ->references('uuid')
+                ->on('verifications')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 
