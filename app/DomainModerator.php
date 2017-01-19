@@ -11,6 +11,18 @@ class DomainModerator extends Model
     public $incrementing = false;
     protected $primaryKey = 'uuid';
 
+    public static function findByCredsOrFail(string $domain_name, string $user_address) : self
+    {
+        $domain = Domain::findByNameOrFail($domain_name);
+        $user = User::findByAddressOrFail($user_address);
+
+        $self = self::where('domain_id', $domain->id)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+
+        return $self;
+    }
+
     public function domain()
     {
         return $this->hasOne(Domain::class, 'id', 'domain_id');
