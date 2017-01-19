@@ -14,7 +14,7 @@ class CreateDomainsTable extends Migration
     public function up()
     {
         Schema::create('domains', function(Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('uuid');
             $table->string('name', 255);
             $table->boolean('public')->default(false);
             $table->string('contact', 256);
