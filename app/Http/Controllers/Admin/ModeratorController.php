@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Validator;
 
 use App\Domain;
+use App\DomainModerator;
+use App\User;
 
 class ModeratorController extends Controller
 {
@@ -16,7 +19,7 @@ class ModeratorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($name)
+    public function index(string $name)
     {
         $domain = Domain::findByNameOrFail($name);
 
@@ -31,9 +34,13 @@ class ModeratorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(string $name)
     {
-        //
+        $domain = Domain::findByNameOrFail($name);
+
+        return view('domain.moderator.create', [
+            'domain' => $domain,
+        ]);
     }
 
     /**
@@ -42,9 +49,45 @@ class ModeratorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, string $name)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'user' => 'required|min:2|max:256'
+        ]);
+
+        $domain = Domain::findByNameOrFail($name);
+        $user = User::findByAddress($request->input('user'));
+
+        // make sure the user exists
+        if ($user === null) {
+            $validator->errors()->add('user', trans('validation.user_not_found', [
+                'user' => $request->input('user'),
+            ]));
+        }
+
+        // check if any errors occurred
+        if ($validator->errors()->any()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+            ;
+        }
+
+        // create new domain_moderators entry
+        $dm = new DomainModerator();
+        $dm->domain_id = $domain->id;
+        $dm->user_id = $user->id;
+        $dm->admin = $request->has('admin');
+        $dm->save();
+
+        // return to the domain moderator index
+        return redirect()->route('domain.moderator.index', [
+            'domain' => $domain->name,
+        ])->withSuccess(trans('moderator.created', [
+            'user' => $user->getAddress(),
+            'domain' => $domain->name,
+        ]));
     }
 
     /**

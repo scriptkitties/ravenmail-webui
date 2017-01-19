@@ -25,5 +25,21 @@ trait AddressTrait {
 
         return $result;
     }
+
+    public static function findByAddress(string $address)
+    {
+        $parts = explode('@', $address);
+
+        if (count($parts) < 2) {
+            throw new ModelNotFoundException();
+        }
+
+        $result = self::where('domain', array_pop($parts))
+            ->where('local', implode('@', $parts))
+            ->first()
+        ;
+
+        return $result;
+    }
 }
 
