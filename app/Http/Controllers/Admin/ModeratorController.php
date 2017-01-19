@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Domain;
+
 class ModeratorController extends Controller
 {
     /**
@@ -14,9 +16,14 @@ class ModeratorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($name)
     {
-        //
+        $domain = Domain::findByNameOrFail($name);
+
+        return view('domain.moderator.index', [
+            'domain' => $domain,
+            'moderators' => $domain->moderators,
+        ]);
     }
 
     /**

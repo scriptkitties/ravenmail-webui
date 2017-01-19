@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use App\NoregAddress;
+use App\DomainModerator;
 
 class Domain extends Model
 {
@@ -20,7 +21,7 @@ class Domain extends Model
 
     public function moderators()
     {
-        return $this->belongsToMany('App\User', 'domain_moderators');
+        return $this->hasMany(DomainModerator::class);
     }
 
     public function noreg_addresses()
