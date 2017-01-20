@@ -12,5 +12,12 @@ class Alias extends Model
     public $incrementing = false;
     protected $primaryKey = 'uuid';
 
-    const UPDATED_AT = null;
+    public static function makeWithVerification() : self
+    {
+        $verification = Verification::generate();
+        $self = new Alias();
+        $self->verification_uuid = $verification->uuid;
+
+        return $self;
+    }
 }
