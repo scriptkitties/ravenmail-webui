@@ -3,9 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
-use App\NoregAddress;
-use App\DomainModerator;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Domain extends Model
 {
@@ -14,27 +12,22 @@ class Domain extends Model
     public $incrementing = false;
     protected $primaryKey = 'uuid';
 
-    public function aliases()
+    public function aliases() : Relation
     {
-        return $this->hasMany(Domain::class, 'domain_uuid', 'uuid');
+        return $this->hasMany(Alias::class, 'domain_uuid', 'uuid');
     }
 
-    public function contact()
+    public function moderators() : Relation
     {
-        return User::findByAddressOrFail($this->attributes['contact']);
+        return $this->hasMany(DomainModerator::class, 'domain_uuid', 'uuid');
     }
 
-    public function moderators()
-    {
-        return $this->hasMany(DomainModerator::class);
-    }
-
-    public function noreg_addresses()
+    public function noregAddresses() : Relation
     {
         return $this->hasMany(NoregAddress::class, 'domain_uuid', 'uuid');
     }
 
-    public function users()
+    public function users() : Relation
     {
         return $this->hasMany(User::class, 'domain_uuid', 'uuid');
     }

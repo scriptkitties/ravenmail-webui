@@ -25,11 +25,11 @@
             Your account holds <strong>admin</strong> status. Congratulations!
         </li>
     @endif
-    @if($user->domainsModerating->count() > 0)
+    @if($user->domainModerators->count() > 0)
         <li>
             Your account holds <strong>moderator</strong> status over
-            <strong>{{ $user->domainsModerating->count() }}</strong>
-            {{ str_plural('domain', $user->domainsModerating->count()) }}.
+            <strong>{{ $user->domainModerators->count() }}</strong>
+            {{ str_plural('domain', $user->domainModerators->count()) }}.
         </li>
     @endif
     <li>

@@ -24,7 +24,7 @@ class DomainController extends Controller
         if ($user->admin) {
            $domains = Domain::orderBy('name')->get();
         } else {
-            $domains = $user->domainsModerating()->orderBy('name')->get();
+            $domains = $user->moderatingDomains()->orderBy('name')->get();
 
             // someone who's not moderating any domains has no right to be here
             if ($domains->count() < 1) {

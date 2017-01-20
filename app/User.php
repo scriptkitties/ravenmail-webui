@@ -4,23 +4,31 @@ namespace App;
 
 use Exception;
 
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
-
-use App\NoregAddress;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model implements Authenticatable
 {
     use AddressTrait;
     use AuthenticatableTrait;
+    use SoftDeletes;
     use UuidTrait;
 
     public $incrementing = false;
     protected $primaryKey = 'uuid';
 
-    public function aliases()
+    public function getDestinationAliases() : Collection
+    {
+        $aliases = Alias::where('destination', $this->getAddress())->get();
+
+        return $aliases;
+    }
+
+    public function aliases() : Collection
     {
         return Alias::where('local', $this->local)
             ->where('domain_uuid', $this->domain->uuid)
@@ -28,14 +36,14 @@ class User extends Model implements Authenticatable
         ;
     }
 
-    public function domain()
+    public function domain() : Relation
     {
         return $this->belongsTo(Domain::class, 'domain_uuid', 'uuid');
     }
 
-    public function domainsModerating()
+    public function domainModerators() : Relation
     {
-        return $this->belongsToMany(Domain::class, 'domain_moderators');
+        return $this->hasMany(DomainModerator::class, 'user_uuid', 'uuid');
     }
 
     public static function isRegisterable(string $local, string $domain) : bool
@@ -98,12 +106,5 @@ class User extends Model implements Authenticatable
         }
 
         return true;
-    }
-
-    public function getDestinationAliases() : Collection
-    {
-        $aliases = Alias::where('destination', $this->getAddress())->get();
-
-        return $aliases;
     }
 }

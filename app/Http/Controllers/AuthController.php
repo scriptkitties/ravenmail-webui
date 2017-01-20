@@ -40,7 +40,7 @@ class AuthController extends Controller
                 throw new \Exception('Invalid email address or password');
             }
 
-            if (!$user->active) {
+            if ($user->trashed()) {
                 throw new \Exception('Account has been disabled');
             }
         } catch(\Exception $e) {
