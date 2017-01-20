@@ -7,21 +7,16 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 trait AddressTrait {
     public function getAddress() : string
     {
-        return $this->local . '@' . $this->domain;
+        return $this->local . '@' . $this->domain->name;
     }
 
     public static function findByAddressOrFail(string $address) : self
     {
-        $parts = explode('@', $address);
+        $result = self::findByAddress($address);
 
-        if (count($parts) < 2) {
+        if ($result === null) {
             throw new ModelNotFoundException();
         }
-
-        $result = self::where('domain', array_pop($parts))
-            ->where('local', implode('@', $parts))
-            ->firstOrFail()
-        ;
 
         return $result;
     }
@@ -34,10 +29,9 @@ trait AddressTrait {
             throw new ModelNotFoundException();
         }
 
-        $result = self::where('domain', array_pop($parts))
-            ->where('local', implode('@', $parts))
-            ->first()
-        ;
+        $result = Domain::findByNameOrFail(array_pop($parts))
+            ->users->where('local', implode('@', $parts))
+            ->first();
 
         return $result;
     }
