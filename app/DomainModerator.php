@@ -16,8 +16,8 @@ class DomainModerator extends Model
         $domain = Domain::findByNameOrFail($domain_name);
         $user = User::findByAddressOrFail($user_address);
 
-        $self = self::where('domain_id', $domain->id)
-            ->where('user_id', $user->id)
+        $self = self::where('domain_uuid', $domain->uuid)
+            ->where('user_uuid', $user->uuid)
             ->firstOrFail();
 
         return $self;
@@ -25,11 +25,11 @@ class DomainModerator extends Model
 
     public function domain()
     {
-        return $this->hasOne(Domain::class, 'id', 'domain_id');
+        return $this->hasOne(Domain::class, 'uuid', 'domain_uuid');
     }
 
     public function user()
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(User::class);
     }
 }

@@ -23,26 +23,28 @@ class User extends Model implements Authenticatable
     public function aliases()
     {
         return Alias::where('local', $this->local)
-            ->where('domain', $this->domain)
+            ->where('domain_uuid', $this->domain->uuid)
             ->get()
         ;
     }
 
     public function domain()
     {
-        return Domain::findByNameOrFail($this->attributes['domain']);
+        return $this->belongsTo(Domain::class, 'domain_uuid', 'uuid');
     }
 
     public function domainsModerating()
     {
-        return $this->belongsToMany('App\Domain', 'domain_moderators');
+        return $this->belongsToMany(Domain::class, 'domain_moderators');
     }
 
     public static function isRegisterable(string $local, string $domain) : bool
     {
+        $domain = Domain::findByNameOrFail($domain);
+
         // check for duplicate
         $count = self::where('local', $local)
-            ->where('domain', $domain)
+            ->where('domain_uuid', $domain->uuid)
             ->count()
         ;
 
@@ -52,7 +54,7 @@ class User extends Model implements Authenticatable
 
         // check for local part on noreg list
         $count = NoregAddress::where('local', $local)
-            ->where('domain', '')
+            ->where('domain_uuid', '')
             ->count()
         ;
 
@@ -62,7 +64,7 @@ class User extends Model implements Authenticatable
 
         // check for full address on noreg list
         $count = NoregAddress::where('local', $local)
-            ->where('domain', $domain)
+            ->where('domain_uuid', $domain->uuid)
             ->count()
         ;
 

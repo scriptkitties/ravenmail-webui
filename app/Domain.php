@@ -16,7 +16,7 @@ class Domain extends Model
 
     public function aliases()
     {
-        return $this->hasMany('App\Alias', 'domain', 'name');
+        return $this->hasMany(Domain::class, 'domain_uuid', 'uuid');
     }
 
     public function contact()
@@ -31,12 +31,12 @@ class Domain extends Model
 
     public function noreg_addresses()
     {
-        return $this->hasMany(NoregAddress::class, 'domain', 'name');
+        return $this->hasMany(NoregAddress::class, 'domain_uuid', 'uuid');
     }
 
     public function users()
     {
-        return $this->hasMany('App\User', 'domain', 'name');
+        return $this->hasMany(User::class, 'domain_uuid', 'uuid');
     }
 
     /**
