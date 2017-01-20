@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 
 use App\Domain;
+use Webpatser\Uuid\Uuid;
 
 class DomainSeeder extends Seeder
 {
@@ -14,6 +15,7 @@ class DomainSeeder extends Seeder
     public function run()
     {
         DB::table('domains')->insert([
+            'uuid' => Uuid::generate(4)->string,
             'name' => 'test.test',
             'public' => true,
             'contact' => 'test@test.test'

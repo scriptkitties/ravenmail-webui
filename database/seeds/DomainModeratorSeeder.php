@@ -18,8 +18,8 @@ class DomainModeratorSeeder extends Seeder
             $user = $domain->users()->first();
 
             factory(DomainModerator::class)->create([
-                'user_id' => $user->id,
-                'domain_id' => $user->domain()->id
+                'user_uuid' => $user->uuid,
+                'domain_uuid' => $user->domain->uuid,
             ]);
         }
     }

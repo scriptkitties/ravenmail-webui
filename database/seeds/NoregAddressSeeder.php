@@ -16,7 +16,7 @@ class NoregAddressSeeder extends Seeder
     {
         foreach (Domain::all() as $domain) {
             factory(NoregAddress::class, rand(0,10))->create([
-                'domain' => $domain->name
+                'domain_uuid' => $domain->uuid
             ]);
         }
     }

@@ -17,58 +17,57 @@ class UserSeeder extends Seeder
     {
         // make sure to have an site admin
         DB::table('users')->insert([
+            'uuid' => Uuid::generate(4)->string,
             'local' => 'test',
-            'domain' => 'test.test',
+            'domain_uuid' => Domain::findByNameOrFail('test.test')->uuid,
             'password' => bcrypt('test'),
             'admin' => true,
-            'active' => true,
         ]);
 
         // make sure to have a domain admin
         DB::table('users')->insert([
+            'uuid' => Uuid::generate(4)->string,
             'local' => 'admin',
-            'domain' => 'test.test',
+            'domain_uuid' => Domain::findByNameOrFail('test.test')->uuid,
             'password' => bcrypt('test'),
             'admin' => false,
-            'active' => true,
         ]);
 
         DB::table('domain_moderators')->insert([
             'uuid' => Uuid::generate(4)->string,
-            'domain_id' => Domain::findByNameOrFail('test.test')->id,
-            'user_id' => User::findByAddressOrFail('admin@test.test')->id,
+            'domain_uuid' => Domain::findByNameOrFail('test.test')->uuid,
+            'user_uuid' => User::findByAddressOrFail('admin@test.test')->uuid,
             'admin' => true,
         ]);
 
         // make sure to have a domain moderator
         DB::table('users')->insert([
+            'uuid' => Uuid::generate(4)->string,
             'local' => 'mod',
-            'domain' => 'test.test',
+            'domain_uuid' => Domain::findByNameOrFail('test.test')->uuid,
             'password' => bcrypt('test'),
             'admin' => false,
-            'active' => true,
         ]);
 
         DB::table('domain_moderators')->insert([
             'uuid' => Uuid::generate(4)->string,
-            'domain_id' => Domain::findByNameOrFail('test.test')->id,
-            'user_id' => User::findByAddressOrFail('mod@test.test')->id,
+            'domain_uuid' => Domain::findByNameOrFail('test.test')->uuid,
+            'user_uuid' => User::findByAddressOrFail('mod@test.test')->uuid,
             'admin' => false,
         ]);
 
         // make sure to have a normal user
         DB::table('users')->insert([
+            'uuid' => Uuid::generate(4)->string,
             'local' => 'user',
-            'domain' => 'test.test',
+            'domain_uuid' => Domain::findByNameOrFail('test.test')->uuid,
             'password' => bcrypt('test'),
             'admin' => false,
-            'active' => true,
         ]);
 
         foreach (Domain::all() as $domain) {
             factory(User::class, rand(5, 20))->create([
-                'domain' => $domain->name,
-                'active' => (rand(1, 100) > 20),
+                'domain_uuid' => $domain->uuid,
             ]);
         }
     }

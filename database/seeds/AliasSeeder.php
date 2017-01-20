@@ -22,7 +22,7 @@ class AliasSeeder extends Seeder
 
             factory(Alias::class, rand(1, 2))->create([
                 'local' => $user->local,
-                'domain' => $user->domain,
+                'domain_uuid' => $user->domain->uuid,
             ]);
         }
     }
