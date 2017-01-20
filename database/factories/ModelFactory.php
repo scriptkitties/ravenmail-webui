@@ -16,6 +16,7 @@ use App\Domain;
 use App\DomainModerator;
 use App\NoregAddress;
 use App\User;
+use App\Verification;
 
 $factory->define(Alias::class, function (Faker\Generator $faker) {
     switch (rand(1, 3)) {
@@ -33,7 +34,7 @@ $factory->define(Alias::class, function (Faker\Generator $faker) {
     return [
         'destination' => $destination,
         'userset' => (rand(0, 1) === 0),
-        'active' => true,
+        'verification_uuid' => Verification::generate()->uuid,
     ];
 });
 
@@ -62,10 +63,9 @@ $factory->define(User::class, function (Faker\Generator $faker) {
 
     return [
         'local' => $faker->userName,
-        'domain' => $faker->domainName,
+        'domain_uuid' => Domain::inRandomOrder()->first()->uuid,
         'password' => bcrypt('test'),
         'remember_token' => '',
         'admin' => false,
-        'active' => true,
     ];
 });
