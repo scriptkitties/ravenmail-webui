@@ -1,0 +1,9 @@
+engines:
+  phpmd:
+    enabled: true
+    checks:
+      CleanCode/StaticAccess:
+        enabled: false
+      Naming/ShortMethodName:
+        enabled: false
+
