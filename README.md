@@ -118,6 +118,11 @@ composer install
 chown -R www:www .
 ```
 
+---
+
+[![Build Status](https://travis-ci.org/scriptkitties/ravenmail-webui.svg?branch=master)](https://travis-ci.org/scriptkitties/ravenmail-webui)
+[![Code Climate](https://codeclimate.com/github/scriptkitties/ravenmail-webui/badges/gpa.svg)](https://codeclimate.com/github/scriptkitties/ravenmail-webui)
+
 [email-tutorial]: https://www.tyil.work/tutorials/setup-imap-mailserver-on-freebsd.html
 [laravel]: https://www.laravel.com/
 [composer]: https://getcomposer.org/

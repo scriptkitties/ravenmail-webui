@@ -1,0 +1,13 @@
+engines:
+  phpmd:
+    enabled: true
+    checks:
+      CleanCode/StaticAccess:
+        enabled: false
+      Naming/ShortMethodName:
+        enabled: false
+ignore_paths:
+  - app/Console/Kernel.php
+  - app/Exceptions/Handler.php
+  - app/Providers/RouteServiceProvider.php
+
