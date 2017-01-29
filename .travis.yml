@@ -5,4 +5,7 @@ php:
 install:
   - composer install
   - php artisan migrate --seed --force
+services: postgresql
+before_script:
+  - psql -c 'create database mail;' -U postgres
 
