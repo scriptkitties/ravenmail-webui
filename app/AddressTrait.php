@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 
 trait AddressTrait {
     public function getAddress() : string
@@ -26,14 +27,22 @@ trait AddressTrait {
         $parts = explode('@', $address);
 
         if (count($parts) < 2) {
-            throw new ModelNotFoundException();
+            return null;
         }
 
-        $result = Domain::findByNameOrFail(array_pop($parts))
-            ->users->where('local', implode('@', $parts))
-            ->first();
+        $result = DB::table('domains')
+            ->select('users.uuid')
+            ->join('users', 'domains.uuid', '=', 'users.domain_uuid')
+            ->where('domains.name', '=', array_pop($parts))
+            ->where('users.local', '=', implode('@', $parts))
+            ->first()
+            ;
 
-        return $result;
+        if ($result === null) {
+            return null;
+        }
+
+        return User::find($result->uuid);
     }
 }
 
