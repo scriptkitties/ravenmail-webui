@@ -15,7 +15,7 @@ class DomainModeratorSeeder extends Seeder
     public function run()
     {
         foreach (Domain::all() as $domain) {
-            $user = $domain->users()->first();
+            $user = $domain->users->first();
 
             factory(DomainModerator::class)->create([
                 'user_uuid' => $user->uuid,
