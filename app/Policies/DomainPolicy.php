@@ -27,7 +27,7 @@ class DomainPolicy
     public function view(User $user, Domain $domain) : bool
     {
         if ($domain->moderators()
-            ->where('user_id', $user->id)
+            ->where('user_uuid', $user->uuid)
             ->count() > 0
         ) {
             return true;
@@ -58,7 +58,7 @@ class DomainPolicy
     {
         if ($domain->moderators()
             ->where('domain_moderators.admin', true)
-            ->where('user_id', $user->id)
+            ->where('user_uuid', $user->uuid)
             ->count() > 0
         ) {
             return true;
