@@ -10,4 +10,5 @@ ignore_paths:
   - app/Console/Kernel.php
   - app/Exceptions/Handler.php
   - app/Providers/RouteServiceProvider.php
+  - tests
 
