@@ -1,11 +1,20 @@
 language: php
+
 php:
   - "7.0"
   - "7.1"
-install:
-  - composer install
-  - php artisan migrate --seed --force
+
 services: postgresql
-before_script:
+
+before_install:
+  - composer self-update
+  - cp .env.travis .env
+
+install:
   - psql -c 'create database mail;' -U postgres
+  - composer install --dev
+  - php artisan migrate --seed --force
+
+script:
+  - ./vendor/bin/phpunit
 
