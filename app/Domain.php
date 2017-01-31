@@ -14,22 +14,22 @@ class Domain extends Model
 
     public function aliases() : Relation
     {
-        return $this->hasMany(Alias::class, 'domain_uuid', 'uuid');
+        return $this->hasMany(Alias::class, 'domain_uuid');
     }
 
     public function moderators() : Relation
     {
-        return $this->hasMany(DomainModerator::class, 'domain_uuid', 'uuid');
+        return $this->hasMany(DomainModerator::class, 'domain_uuid');
     }
 
     public function noregAddresses() : Relation
     {
-        return $this->hasMany(NoregAddress::class, 'domain_uuid', 'uuid');
+        return $this->hasMany(NoregAddress::class, 'domain_uuid');
     }
 
     public function users() : Relation
     {
-        return $this->hasMany(User::class, 'domain_uuid', 'uuid');
+        return $this->hasMany(User::class, 'domain_uuid');
     }
 
     /**

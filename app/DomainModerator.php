@@ -25,11 +25,11 @@ class DomainModerator extends Model
 
     public function domain()
     {
-        return $this->hasOne(Domain::class, 'domain_uuid', 'uuid');
+        return $this->hasOne(Domain::class, 'uuid', 'domain_uuid');
     }
 
     public function user()
     {
-        return $this->hasOne(User::class, 'user_uuid', 'uuid');
+        return $this->hasOne(User::class, 'uuid', 'user_uuid');
     }
 }

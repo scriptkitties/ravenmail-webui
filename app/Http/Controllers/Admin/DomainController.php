@@ -24,11 +24,15 @@ class DomainController extends Controller
         if ($user->admin) {
            $domains = Domain::orderBy('name')->get();
         } else {
-            $domains = $user->moderatingDomains()->orderBy('name')->get();
+            $domains_moderating = $user->domainModerators()->get();
 
             // someone who's not moderating any domains has no right to be here
-            if ($domains->count() < 1) {
+            if ($domains_moderating->count() < 1) {
                 App::abort(403);
+            }
+
+            foreach ($domains_moderating as $domain) {
+                $domains[] = $domain->domain;
             }
         }
 
@@ -91,12 +95,8 @@ class DomainController extends Controller
      */
     public function show($name)
     {
-        $domain = Domain::where('name', $name)->first();
+        $domain = Domain::findByNameOrFail($name);
         $this->authorize('view', $domain);
-
-        if ($domain === null) {
-            return App::abort(404);
-        }
 
         return view('domain.show', [
             'domain' => $domain
@@ -170,7 +170,7 @@ class DomainController extends Controller
             $alias->delete();
         }
 
-        foreach ($domain->noreg_addresses as $noreg) {
+        foreach ($domain->noregAddresses as $noreg) {
             $noreg->delete();
         }
 
