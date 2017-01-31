@@ -7,18 +7,29 @@
     <li>
         <a href="{{ route('domain.user.index', ['domain' => $domain->name]) }}">
             <i class="fa fa-fw fa-envelope"></i>
-            {{ $domain->users()->count() }}
+            {{ $domain->users->count() }}
             email
-            {{ str_plural('account', $domain->users()->count()) }}
+            {{ str_plural('account', $domain->users->count()) }}
         </a>
     </li>
     <li>
         <a href="{{ route('domain.alias.index', ['domain' => $domain->name]) }}">
             <i class="fa fa-fw fa-mail-forward"></i>
-            {{ $domain->aliases()->count() }}
+            {{ $domain->aliases->count() }}
             email
-            {{ str_plural('forwards', $domain->aliases()->count()) }}
+            {{ str_plural('forward', $domain->aliases->count()) }}
         </a>
+    </li>
+    <li>
+        <a href="{{ route('domain.moderator.index', ['domain' => $domain->name]) }}">
+            <i class="fa fa-fw fa-bolt"></i>
+            {{ $domain->moderators->count() }}
+            domain
+            {{ str_plural('moderator', $domain->moderators->count()) }}
+        </a>
+    </li>
+    <li>
+        Domain's contact is <a href="mailto:{{ $domain->contact }}">{{ $domain->contact }}</a>.
     </li>
     <li>
         Domain is

@@ -3,25 +3,33 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Domain extends Model
 {
-    protected $primaryKey = 'name';
+    use UuidTrait;
+
     public $incrementing = false;
+    protected $primaryKey = 'uuid';
 
-    public function aliases()
+    public function aliases() : Relation
     {
-        return $this->hasMany('App\Alias', 'domain', 'name');
+        return $this->hasMany(Alias::class, 'domain_uuid');
     }
 
-    public function users()
+    public function moderators() : Relation
     {
-        return $this->hasMany('App\User', 'domain', 'name');
+        return $this->hasMany(DomainModerator::class, 'domain_uuid');
     }
 
-    public function contact()
+    public function noregAddresses() : Relation
     {
-        return User::findByAddressOrFail($this->attributes['contact']);
+        return $this->hasMany(NoregAddress::class, 'domain_uuid');
+    }
+
+    public function users() : Relation
+    {
+        return $this->hasMany(User::class, 'domain_uuid');
     }
 
     /**

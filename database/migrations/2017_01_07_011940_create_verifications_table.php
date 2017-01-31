@@ -15,13 +15,10 @@ class CreateVerificationsTable extends Migration
     {
         Schema::create('verifications', function (Blueprint $table) {
             $table->uuid('uuid');
+            $table->boolean('verified')->default(false);
             $table->timestamps();
 
             $table->primary('uuid');
-        });
-
-        Schema::table('aliases', function (Blueprint $table) {
-            $table->foreign('verification')->references('uuid')->on('verifications');
         });
     }
 
@@ -32,10 +29,6 @@ class CreateVerificationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('aliases', function (Blueprint $table) {
-            $table->dropForeign('aliases_verification_foreign');
-        });
-
         Schema::drop('verifications');
     }
 }

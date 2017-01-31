@@ -29,11 +29,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('/user.alias', 'User\AliasController', ['except' => 'show', 'edit', 'update']);
 
     Route::group([
-        'middleware' => ['admin'],
         'namespace' => 'Admin'
     ], function() {
         Route::resource('/domain', 'DomainController');
         Route::resource('/domain.alias', 'AliasController');
+        Route::resource('/domain.moderator', 'ModeratorController');
         Route::resource('/domain.user', 'UserController');
     });
 });

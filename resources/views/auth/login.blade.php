@@ -1,6 +1,7 @@
 @extends('main')
 
 @section('content')
+<h2>Login</h2>
 <form method="post" action="{{ route('login.post') }}" class="pure-form pure-form-aligned">
     {{ csrf_field() }}
     <fieldset>

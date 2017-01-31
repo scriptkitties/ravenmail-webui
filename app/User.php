@@ -4,36 +4,55 @@ namespace App;
 
 use Exception;
 
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
-
-use App\NoregAddress;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model implements Authenticatable
 {
-    use AuthenticatableTrait;
     use AddressTrait;
+    use AuthenticatableTrait;
+    use SoftDeletes;
+    use UuidTrait;
 
-    public function aliases()
+    public $incrementing = false;
+    protected $primaryKey = 'uuid';
+
+    public function getDestinationAliases() : Collection
+    {
+        $aliases = Alias::where('destination', $this->getAddress())->get();
+
+        return $aliases;
+    }
+
+    public function aliases() : Collection
     {
         return Alias::where('local', $this->local)
-            ->where('domain', $this->domain)
+            ->where('domain_uuid', $this->domain->uuid)
             ->get()
         ;
     }
 
-    public function domain()
+    public function domain() : Relation
     {
-        return Domain::findByNameOrFail($this->attributes['domain']);
+        return $this->belongsTo(Domain::class, 'domain_uuid', 'uuid');
+    }
+
+    public function domainModerators() : Relation
+    {
+        return $this->hasMany(DomainModerator::class, 'user_uuid', 'uuid');
     }
 
     public static function isRegisterable(string $local, string $domain) : bool
     {
+        $domain = Domain::findByNameOrFail($domain);
+
         // check for duplicate
         $count = self::where('local', $local)
-            ->where('domain', $domain)
+            ->where('domain_uuid', $domain->uuid)
             ->count()
         ;
 
@@ -43,7 +62,7 @@ class User extends Model implements Authenticatable
 
         // check for local part on noreg list
         $count = NoregAddress::where('local', $local)
-            ->where('domain', '')
+            ->where('domain_uuid', '')
             ->count()
         ;
 
@@ -53,7 +72,7 @@ class User extends Model implements Authenticatable
 
         // check for full address on noreg list
         $count = NoregAddress::where('local', $local)
-            ->where('domain', $domain)
+            ->where('domain_uuid', $domain->uuid)
             ->count()
         ;
 
@@ -87,12 +106,5 @@ class User extends Model implements Authenticatable
         }
 
         return true;
-    }
-
-    public function getDestinationAliases() : Collection
-    {
-        $aliases = Alias::where('destination', $this->getAddress())->get();
-
-        return $aliases;
     }
 }

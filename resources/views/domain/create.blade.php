@@ -9,6 +9,10 @@
             <input id="domain" name="domain" type="text">
         </div>
         <div class="pure-control-group">
+            <label for="contact">Contact email address</label>
+            <input id="contact" name="contact" type="text">
+        </div>
+        <div class="pure-control-group">
             <label class="pure-checkbox" for="public">
                 <input id="public" name="public" type="checkbox">
                 Open registration
