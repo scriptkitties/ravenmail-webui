@@ -13,6 +13,7 @@ before_install:
 install:
   - psql -c 'create database mail;' -U postgres
   - composer install --dev
+  - php artisan key:generate
   - php artisan migrate --seed --force
 
 script:
