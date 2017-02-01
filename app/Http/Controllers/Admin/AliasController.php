@@ -17,14 +17,14 @@ class AliasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(string $name)
+    public function index(string $domainName)
     {
-        $aliases = Alias::where('domain', $name)
+        $aliases = Alias::where('domain', $domainName)
             ->get()
         ;
 
         return view('domain.alias.index', [
-            'domain' => $name,
+            'domain' => $domainName,
             'aliases' => $aliases
         ]);
     }
@@ -34,10 +34,10 @@ class AliasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(string $name)
+    public function create(string $domainName)
     {
         return view('domain.alias.create', [
-            'domain' => $name
+            'domain' => $domainName
         ]);
     }
 
@@ -47,7 +47,7 @@ class AliasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, string $name)
+    public function store(Request $request, string $domainName)
     {
         // apply basic form validation
         $this->validate($request, [
@@ -55,7 +55,7 @@ class AliasController extends Controller
             'destination' => 'required|min:2|max:255|email'
         ]);
 
-        $domain = Domain::findByNameOrFail($name);
+        $domain = Domain::findByNameOrFail($domainName);
 
         $alias = new Alias();
         $alias->domain = $domain->name;
@@ -89,13 +89,13 @@ class AliasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(string $domain, string $address)
+    public function destroy(string $domainName, string $address)
     {
         $alias = Alias::findByAddressOrFail($address);
         $alias->delete();
 
         return redirect()->route('domain.alias.index', [
-            'domain' => $domain
+            'domain' => $domainName
         ]);
     }
 }
