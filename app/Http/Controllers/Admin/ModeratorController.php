@@ -75,11 +75,11 @@ class ModeratorController extends Controller
         }
 
         // create new domain_moderators entry
-        $dm = new DomainModerator();
-        $dm->domain_id = $domain->id;
-        $dm->user_id = $user->id;
-        $dm->admin = $request->has('admin');
-        $dm->save();
+        $domainModerator = new DomainModerator();
+        $domainModerator->domain_id = $domain->id;
+        $domainModerator->user_id = $user->id;
+        $domainModerator->admin = $request->has('admin');
+        $domainModerator->save();
 
         // return to the domain moderator index
         return redirect()->route('domain.moderator.index', [
@@ -98,10 +98,10 @@ class ModeratorController extends Controller
      */
     public function edit(string $name, string $address)
     {
-        $dm = DomainModerator::findByCredsOrFail($name, $address);
+        $domainModerator = DomainModerator::findByCredsOrFail($name, $address);
 
         return view('domain.moderator.edit', [
-            'moderator' => $dm,
+            'moderator' => $domainModerator,
         ]);
     }
 
@@ -114,14 +114,14 @@ class ModeratorController extends Controller
      */
     public function update(Request $request, string $name, string $address)
     {
-        $dm = DomainModerator::findByCredsOrFail($name, $address);
-        $dm->admin = ($request->has('admin') === true);
-        $dm->save();
+        $domainModerator = DomainModerator::findByCredsOrFail($name, $address);
+        $domainModerator->admin = ($request->has('admin') === true);
+        $domainModerator->save();
 
         return redirect()->route('domain.moderator.index', [
-            'name' => $dm->domain->name,
+            'name' => $domainModerator->domain->name,
         ])->withSuccess(trans('moderator.updated', [
-            'user' => $dm->user->getAddress(),
+            'user' => $domainModerator->user->getAddress(),
         ]));
     }
 
@@ -135,12 +135,12 @@ class ModeratorController extends Controller
     {
         $domain = Domain::findByNameOrFail($name);
         $user = User::findByAddressOrFail($address);
-        $dm = DomainModerator::where('domain_id', $domain->id)
+        $domainModerator = DomainModerator::where('domain_id', $domain->id)
             ->where('user_id', $user->id)
             ->firstOrFail()
         ;
 
-        $dm->delete();
+        $domainModerator->delete();
 
         return redirect()->route('domain.moderator.index', [
             'name' => $domain->name,

@@ -18,7 +18,7 @@ class UserController extends Controller
      * @param  string $name
      * @return \Illuminate\Http\Response
      */
-    public function index($name)
+    public function index(string $name)
     {
         $domain = Domain::where('name', $name)->firstOrFail();
 
@@ -33,7 +33,7 @@ class UserController extends Controller
      * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function create($name)
+    public function create(string $name)
     {
         $domain = Domain::where('name', $name)->firstOrFail();
 
@@ -49,7 +49,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($name, Request $request)
+    public function store(string $name, Request $request)
     {
         // TODO: form validation
 
@@ -70,11 +70,13 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+     *
      * @param  string  $domain_name
      * @param  string  $local
      * @return \Illuminate\Http\Response
      */
-    public function show($domain_name, $address)
+    public function show(string $domainName, string $address)
     {
         $user = User::findByAddressOrFail($address);
 
@@ -86,11 +88,13 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+     *
      * @param  string  $name
      * @param  string  $address
      * @return \Illuminate\Http\Response
      */
-    public function edit($name, $address)
+    public function edit(string $domainName, string $address)
     {
         $user = User::findByAddressOrFail($address);
 
@@ -106,7 +110,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $domain, $address)
+    public function update(Request $request, string $domainName, string $address)
     {
         $user = User::findByAddressOrFail($address);
 
@@ -123,7 +127,7 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('domain.users.show', [
-            'domain' => $domain,
+            'domain' => $domainName,
             'user' => $address
         ]);
     }
@@ -131,10 +135,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, string $domain, string $address)
+    public function destroy(Request $request, string $domainName, string $address)
     {
         $this->validate($request, [
             'confirm-destroy' => 'required'

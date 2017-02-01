@@ -102,12 +102,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(string $address)
     {
-        //
+        // NYI
+        App::abort(404);
     }
 
     /**
@@ -149,16 +152,5 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('dashboard');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        // NYI
     }
 }
