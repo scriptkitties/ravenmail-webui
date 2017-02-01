@@ -70,6 +70,8 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+     *
      * @param  string  $domain_name
      * @param  string  $local
      * @return \Illuminate\Http\Response
@@ -85,6 +87,8 @@ class UserController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      *
      * @param  string  $name
      * @param  string  $address
@@ -130,6 +134,8 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
