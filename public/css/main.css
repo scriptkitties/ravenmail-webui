@@ -73,7 +73,9 @@ input {
 div.notice, div.success, div.warning, div.error,
 section.notice, section.success, section.warning, section.error,
 p.notice, p.success, p.warning, p.error {
-	padding: 1em
+	padding: 1em;
+	border-radius: .4rem;
+	margin: 2rem 0;
 }
 
 .notice {
