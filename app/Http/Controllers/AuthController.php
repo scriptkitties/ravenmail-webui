@@ -34,9 +34,9 @@ class AuthController extends Controller
         }
 
         try {
-            $user = User::findByAddressOrFail($request->input('email'));
+            $user = User::findByAddress($request->input('email'));
 
-            if (!Hash::check($request->input('password'), $user->password)) {
+            if ($user === null || !Hash::check($request->input('password'), $user->password)) {
                 throw new \Exception('Invalid email address or password');
             }
 
