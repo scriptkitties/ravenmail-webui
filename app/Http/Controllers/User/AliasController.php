@@ -99,14 +99,14 @@ class AliasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(string $user, int $alias_id)
+    public function destroy(string $user, string $aliasUuid)
     {
         if ($user !== Auth::user()->getAddress()) {
             return App::abort(404);
         }
 
-        $alias = Alias::findOrFail($alias_id);
-        Alias::destroy($alias->id);
+        $alias = Alias::findOrFail($aliasUuid);
+        Alias::destroy($alias->uuid);
 
         return redirect()->route('user.alias.index', [
             'user' => Auth::user()->getAddress()
