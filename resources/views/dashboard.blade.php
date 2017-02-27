@@ -6,14 +6,14 @@
     You are curently logged in as <strong>{{ $user->getAddress() }}</strong>.
 </p>
 <h3>Account actions</h3>
-<ul class="pure-menu-list">
-    <li class="pure-menu-item">
-        <a class="pure-menu-link" href="{{ route('user.edit', ['user' => $user->getAddress()]) }}">
+<ul>
+    <li>
+        <a href="{{ route('user.edit', ['user' => $user->getAddress()]) }}">
             <i class="fa fa-fw fa-lock"></i> Change password
         </a>
     </li>
-    <li class="pure-menu-item">
-        <a class="pure-menu-link" href="{{ route('user.alias.index', ['user' => $user->getAddress()]) }}">
+    <li>
+        <a href="{{ route('user.alias.index', ['user' => $user->getAddress()]) }}">
             <i class="fa fa-fw fa-mail-forward"></i> Manage aliases
         </a>
     </li>

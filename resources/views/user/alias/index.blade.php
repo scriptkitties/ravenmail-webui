@@ -7,14 +7,14 @@
         @if(!$user->admin && $user->aliases()->count() > $max)
             You have reached the maximum number of aliases for your account.
         @else
-            <a class="pure-button" href="{{ route('user.alias.create', ['user' => $user->getAddress()]) }}">
+            <a href="{{ route('user.alias.create', ['user' => $user->getAddress()]) }}">
                 <i class="fa fa-plus"></i>
                 Add alias
             </a>
         @endif
     </p>
 </section>
-<table class="pure-table pure-table-striped">
+<table>
     <thead>
         <tr>
             <th>Destination</th>
@@ -34,7 +34,7 @@
                     <form method="post" action="{{ route('user.alias.destroy', ['user' => Auth::user()->getAddress(), 'alias' => $alias->id]) }}">
                         {{ csrf_field() }}
                         {{ method_field('delete') }}
-                        <button class="pure-button" type="submit">
+                        <button class="button-primary" type="submit">
                             <i class="fa fa-fw fa-trash"></i>
                             Delete
                         </button>

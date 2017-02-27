@@ -23,7 +23,7 @@
     </li>
 </ul>
 <p>
-    <a class="pure-button" href="{{ route('domain.user.edit', ['name' => $user->domain, 'address' => $user->getAddress()]) }}">
+    <a href="{{ route('domain.user.edit', ['name' => $user->domain, 'address' => $user->getAddress()]) }}">
         <i class="fa fa-fw fa-pencil"></i> Edit user
     </a>
 </p>
@@ -51,14 +51,14 @@
             all emails of this user as well. None of this information can be
             retrieved once it has been deleted. You have been warned.
         </p>
-        <div class="pure-control-group">
-            <label class=pure-checkbox" for="confirm-destroy">
+        <div>
+            <label for="confirm-destroy">
                 <input id="confirm-destroy" type="checkbox" name="confirm-destroy">
                 I am sure
             </label>
         </div>
-        <div class="pure-control-group">
-            <button class="pure-button" type="submit">
+        <div>
+            <button class="button-primary" type="submit">
                 <i class="fa fa-fw fa-trash"></i>
                 Delete this user
             </button>

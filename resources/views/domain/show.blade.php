@@ -41,19 +41,19 @@
     </li>
 </ul>
 <section>
-    <a class="pure-button" href="{{ route('domain.edit', ['name' => $domain->name]) }}">
+    <a href="{{ route('domain.edit', ['name' => $domain->name]) }}">
         <i class="fa fa-fw fa-pencil"></i> Edit domain
     </a>
 </section>
 <h3>Create new ...</h3>
-<ul class="pure-menu-list">
-    <li class="pure-menu-item">
-        <a class="pure-menu-link" href="{{ route('domain.user.create', ['domain' => $domain->name]) }}">
+<ul>
+    <li>
+        <a href="{{ route('domain.user.create', ['domain' => $domain->name]) }}">
             <i class="fa fa-fw fa-envelope"></i> Account
         </a>
     </li>
-    <li class="pure-menu-item">
-        <a class="pure-menu-link" href="{{ route('domain.alias.create', ['domain' => $domain->name]) }}">
+    <li>
+        <a href="{{ route('domain.alias.create', ['domain' => $domain->name]) }}">
             <i class="fa fa-fw fa-mail-forward"></i> Forward
         </a>
     </li>
@@ -69,14 +69,14 @@
             this information can be retrieved once it has been deleted. You
             have been warned.
         </p>
-        <div class="pure-control-group">
-            <label class=pure-checkbox" for="confirm-destroy">
+        <div>
+            <label for="confirm-destroy">
                 <input id="confirm-destroy" type="checkbox" name="confirm-destroy">
                 I am sure
             </label>
         </div>
-        <div class="pure-control-group">
-            <button class="pure-button" type="submit">
+        <div>
+            <button>
                 <i class="fa fa-fw fa-trash"></i>
                 Delete this domain
             </button>

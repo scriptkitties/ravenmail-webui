@@ -4,12 +4,12 @@
 <h2>Users on {{ $domain->name }}</h2>
 <section>
     <p>
-        <a class="pure-button" href="{{ route('domain.user.create', ['domain' => $domain->name]) }}">
+        <a class="button-primary" href="{{ route('domain.user.create', ['domain' => $domain->name]) }}">
             <i class="fa fa-plus"></i> Add user
         </a>
     </p>
 </section>
-<table class="pure-table pure-table-striped">
+<table>
     <thead>
         <tr>
             <th>Email address</th>

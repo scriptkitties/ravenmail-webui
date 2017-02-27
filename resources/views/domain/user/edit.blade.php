@@ -7,7 +7,7 @@
     {{ method_field('PUT') }}
     <h2>Account details</h2>
     <fieldset>
-        <div class="pure-control-group">
+        <div>
             <label for="password">Password</label>
             <input id="password" name="password" type="password">
             <p>
@@ -17,8 +17,8 @@
     </fieldset>
     <h2>Privileges</h2>
     <fieldset>
-        <div class="pure-control-group">
-            <label class="pure-checkbox" for="active">
+        <div>
+            <label for="active">
                 <input
                     id="active"
                     type="checkbox"
@@ -30,8 +30,8 @@
                 Active
             </label>
         </div>
-        <div class="pure-control-group">
-            <label class="pure-checkbox" for="admin">
+        <div>
+            <label for="admin">
                 <input
                     id="admin"
                     type="checkbox"
@@ -44,8 +44,8 @@
             </label>
         </div>
     </fieldset>
-    <div class="pure-control-group">
-        <button class="pure-button" type="submit">
+    <div>
+        <button type="submit">
             <i class="fa fa-fw fa-save"></i>
             Save
         </button>

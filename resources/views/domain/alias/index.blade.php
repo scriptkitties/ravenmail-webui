@@ -4,10 +4,10 @@
 <h2>Aliases</h2>
 <section>
     <p>
-        <a class="pure-button" href="{{ route('domain.alias.create', ['domain' => $domain]) }}"><i class="fa fa-plus"></i> Add alias</a>
+        <a href="{{ route('domain.alias.create', ['domain' => $domain]) }}"><i class="fa fa-plus"></i> Add alias</a>
     </p>
 </section>
-<table class="pure-table pure-table-striped">
+<table>
     <thead>
         <tr>
             <th>Origin</th>
@@ -24,7 +24,7 @@
                     <form method="post" action="{{ route('domain.alias.destroy', ['domain' => $alias->domain, 'address' => $alias->getAddress()]) }}">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
-                        <button class="pure-button" type="submit">
+                        <button class="button-primary" type="submit">
                             <i class="fa fa-fw fa-trash"></i>
                             Delete
                         </button>
