@@ -5,16 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="/css/font-awesome.css">
-        <link rel="stylesheet" type="text/css" href="/css/pure/base-min.css">
-        <link rel="stylesheet" type="text/css" href="/css/pure/buttons-core-min.css">
-        <link rel="stylesheet" type="text/css" href="/css/pure/buttons-min.css">
-        <link rel="stylesheet" type="text/css" href="/css/pure/forms-min.css">
-        <link rel="stylesheet" type="text/css" href="/css/pure/grids-responsive-min.css">
-        <link rel="stylesheet" type="text/css" href="/css/pure/grids-units-min.css">
-        <link rel="stylesheet" type="text/css" href="/css/pure/menus-core-min.css">
-        <link rel="stylesheet" type="text/css" href="/css/pure/menus-horizontal-min.css">
-        <link rel="stylesheet" type="text/css" href="/css/pure/menus-skin-min.css">
-        <link rel="stylesheet" type="text/css" href="/css/pure/tables-min.css">
+        <link rel="stylesheet" type="text/css" href="/css/milligram.min.css">
         <link rel="stylesheet" type="text/css" href="/css/main.css">
         <title>{{ config('app.name') }}</title>
     </head>
