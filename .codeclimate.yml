@@ -6,8 +6,14 @@ engines:
         enabled: false
       Naming/ShortMethodName:
         enabled: false
+    exclude_fingerprints:
+      - 216f244f98fe6f4272c9a383fc9d427d
+      - 28a8a5ec0e07f3f7b58e6dc21aaec900
+      - abbecdad053be187fc5f62135b5c7e03
+      - c1c5203b64fc4e2ce2e183875253dd6b
 ignore_paths:
   - app/Console/Kernel.php
   - app/Exceptions/Handler.php
   - app/Providers/RouteServiceProvider.php
+  - tests
 

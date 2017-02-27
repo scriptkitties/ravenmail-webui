@@ -20,20 +20,24 @@ class DomainController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $domains = [];
 
         if ($user->admin) {
            $domains = Domain::orderBy('name')->get();
-        } else {
-            $domains_moderating = $user->domainModerators()->get();
+        }
 
-            // someone who's not moderating any domains has no right to be here
-            if ($domains_moderating->count() < 1) {
-                App::abort(403);
-            }
+        if (count($domains) === 0) {
+            $domainsModerating = $user->domainModerators()->get();
 
-            foreach ($domains_moderating as $domain) {
+            // extract the actual domain objects
+            foreach ($domainsModerating as $domain) {
                 $domains[] = $domain->domain;
             }
+        }
+
+        // someone who's not moderating any domains has no right to be here
+        if (count($domains) < 1) {
+            App::abort(403);
         }
 
         return view('domain.index', [
