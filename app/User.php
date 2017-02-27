@@ -46,9 +46,9 @@ class User extends Model implements Authenticatable
         return $this->hasMany(DomainModerator::class, 'user_uuid', 'uuid');
     }
 
-    public static function isRegisterable(string $local, string $domain) : bool
+    public static function isRegisterable(string $local, string $domain_uuid) : bool
     {
-        $domain = Domain::findByNameOrFail($domain);
+        $domain = Domain::find($domain_uuid);
 
         // check for duplicate
         $count = self::where('local', $local)
@@ -61,8 +61,7 @@ class User extends Model implements Authenticatable
         }
 
         // check for local part on noreg list
-        $count = NoregAddress::where('local', $local)
-            ->where('domain_uuid', '')
+        $count = NoregLocal::where('local', $local)
             ->count()
         ;
 

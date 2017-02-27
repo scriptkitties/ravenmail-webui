@@ -61,7 +61,7 @@ class UserController extends Controller
         }
 
         // dont allow addresses considered unregisterable
-        if (!User::isRegisterable($request->input('local'), $request->input('domain'))) {
+        if (!User::isRegisterable($request->input('local'), $domain->uuid)) {
             $validator->errors()->add('local', trans('user.dupe'));
         }
 
@@ -86,7 +86,7 @@ class UserController extends Controller
         // create the new user
         $user = new User();
         $user->local = $request->input('local');
-        $user->domain = $request->input('domain');
+        $user->domain_uuid = $domain->uuid;
         $user->password = Hash::make($request->input('password'));
         $user->save();
 
@@ -102,15 +102,12 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(string $address)
+    public function show($id)
     {
-        // NYI
-        App::abort(404);
+        //
     }
 
     /**
@@ -152,5 +149,16 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('dashboard');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        // NYI
     }
 }
