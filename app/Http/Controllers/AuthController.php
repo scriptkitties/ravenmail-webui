@@ -14,7 +14,7 @@ class AuthController extends Controller
     public function getLogin()
     {
         if (Auth::check()) {
-            return redirect(route('dashboard'));
+            return redirect()->route('dashboard');
         }
 
         return view('auth.login');
@@ -24,7 +24,7 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return redirect(route('login'));
+        return redirect()->route('login');
     }
 
     public function postLogin(Request $request)
@@ -34,9 +34,9 @@ class AuthController extends Controller
         }
 
         try {
-            $user = User::findByAddressOrFail($request->input('email'));
+            $user = User::findByAddress($request->input('email'));
 
-            if (!Hash::check($request->input('password'), $user->password)) {
+            if ($user === null || !Hash::check($request->input('password'), $user->password)) {
                 throw new \Exception('Invalid email address or password');
             }
 
@@ -44,7 +44,10 @@ class AuthController extends Controller
                 throw new \Exception('Account has been disabled');
             }
         } catch(\Exception $e) {
-            return view('auth.login')->withErrors([$e->getMessage()]);
+            return redirect()
+                ->route('login')
+                ->withErrors([$e->getMessage()])
+                ;
         }
 
         Auth::login($user, $request->has('remember'));
