@@ -82,28 +82,18 @@ class User extends Model implements Authenticatable
         return true;
     }
 
-    public static function isValidLocal(string $string) : bool
+    public static function isValidAddress(string $local, string $domain) : bool
     {
-        $regexes = [
-            '/^\./',
-            '/\.$/',
-            '/[^\.\'\/a-zA-Z0-9!#$%&*-=?^_`{|}~]/',
-        ];
+        $address = $local . '@' . $domain;
 
-        foreach ($regexes as $regex) {
-            $result = preg_match($regex, $string);
+        // check for local size
+        $strlen = strlen($local);
 
-            // check if the regex engine broke
-            if ($result === false) {
-                throw new Exception('Regex match failed');
-            }
-
-            // check if anything matched
-            if ($result > 0) {
-                return false;
-            }
+        if ($strlen < 1 || $strlen > 64) {
+            return false;
         }
 
-        return true;
+        // check full address
+        return !(filter_var($address, FILTER_VALIDATE_EMAIL) === false);
     }
 }
