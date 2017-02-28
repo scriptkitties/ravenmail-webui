@@ -46,9 +46,9 @@ class User extends Model implements Authenticatable
         return $this->hasMany(DomainModerator::class, 'user_uuid', 'uuid');
     }
 
-    public static function isRegisterable(string $local, string $domain_uuid) : bool
+    public static function isRegisterable(string $local, string $domainUuid) : bool
     {
-        $domain = Domain::find($domain_uuid);
+        $domain = Domain::find($domainUuid);
 
         // check for duplicate
         $count = self::where('local', $local)
