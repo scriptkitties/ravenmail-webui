@@ -4,13 +4,13 @@
     <h2>Moderators of {{ $domain->name }}</h2>
     <section>
         <p>
-            <a class="pure-button" href="{{ route('domain.moderator.create', ['domain' => $domain->name]) }}">
+            <a href="{{ route('domain.moderator.create', ['domain' => $domain->name]) }}">
                 <i class="fa fa-plus"></i>
                 Add moderator
             </a>
         </p>
     </section>
-    <table class="pure-table pure-table-striped">
+    <table>
         <thead>
             <tr>
                 <th>User</th>
@@ -32,7 +32,7 @@
                         <a href="{{ route('domain.moderator.edit', [
                             'name' => $domain->name,
                             'address' => $moderator->user->getAddress(),
-                        ]) }}" class="pure-button">
+                        ]) }}">
                             <i class="fa fa-fw fa-pencil"></i>
                             Edit
                         </a>
@@ -42,7 +42,7 @@
                         ]) }}" style="display: inline">
                             {{ csrf_field() }}
                             {{ method_field('delete') }}
-                            <button class="pure-button" type="submit">
+                            <button class="button-primary" type="submit">
                                 <i class="fa fa-fw fa-trash"></i>
                                 Delete
                             </button>

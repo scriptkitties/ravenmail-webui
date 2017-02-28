@@ -2,12 +2,12 @@
 
 @section('content')
 <h2>Edit {{ $domain->name }}</h2>
-<form class="pure-form pure-form-aligned" method="post" action="{{ route('domain.update', ['name' => $domain->name]) }}">
+<form method="post" action="{{ route('domain.update', ['name' => $domain->name]) }}">
     {{ csrf_field() }}
     {{ method_field('PUT') }}
     <fieldset>
-        <div class="pure-control-group">
-            <label class="pure-checkbox" for="public">
+        <div>
+            <label for="public">
                 <input
                     type="checkbox"
                     name="public"
@@ -18,8 +18,8 @@
                 Public domain
             </label>
         </div>
-        <div class="pure-control-group">
-            <button class="pure-button" type="submit">
+        <div>
+            <button class="button-primary" type="submit">
                 <i class="fa fa-fw fa-save"></i>
                 Save
             </button>

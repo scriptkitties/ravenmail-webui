@@ -4,10 +4,10 @@
 <h2>Domains</h2>
 <section>
     <p>
-        <a class="pure-button" href="{{ route('domain.create') }}"><i class="fa fa-plus"></i> Add domain</a>
+        <a href="{{ route('domain.create') }}"><i class="fa fa-plus"></i> Add domain</a>
     </p>
 </section>
-<table class="pure-table pure-table-striped">
+<table>
     <thead>
         <tr>
             <th>Domain name</th>
@@ -24,13 +24,13 @@
                 </td>
                 <td>
                     {{ $domain->users()->count() }}
-                    <a class="pure-button button-xsmall" href="{{ route('domain.user.create', ['domain' => $domain->name]) }}">
+                    <a class="button-xsmall" href="{{ route('domain.user.create', ['domain' => $domain->name]) }}">
                         <i class="fa fa-fw fa-plus"></i>
                     </a>
                 </td>
                 <td>
                     {{ $domain->aliases()->count() }}
-                    <a class="pure-button button-xsmall" href="{{ route('domain.alias.create', ['domain' => $domain->name]) }}">
+                    <a class="button-xsmall" href="{{ route('domain.alias.create', ['domain' => $domain->name]) }}">
                         <i class="fa fa-fw fa-plus"></i>
                     </a>
                 </td>

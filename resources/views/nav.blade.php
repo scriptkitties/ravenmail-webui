@@ -1,14 +1,14 @@
-<nav class="pure-menu pure-menu-horizontal">
-    <ul class="pure-menu-list">
+<nav>
+    <ul>
         @if(Auth::check())
-            <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('dashboard') }}">dashboard</a></li>
+            <li><a href="{{ route('dashboard') }}">dashboard</a></li>
             @if(Auth::user()->admin || Auth::user()->domainModerators->count() > 0)
-                <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('domain.index') }}">domains</a></li>
+                <li><a href="{{ route('domain.index') }}">domains</a></li>
             @endif
-            <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('logout') }}">logout</a></li>
+            <li><a href="{{ route('logout') }}">logout</a></li>
         @else
-            <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('login') }}">login</a></li>
-            <li class="pure-menu-item"><a class="pure-menu-link" href="{{ route('user.create') }}">register</a></li>
+            <li><a href="{{ route('login') }}">login</a></li>
+            <li><a href="{{ route('user.create') }}">register</a></li>
         @endif
     </ul>
 </nav>
