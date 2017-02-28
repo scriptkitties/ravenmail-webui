@@ -43,7 +43,7 @@ class UserController extends Controller
     {
         $rules = [
             'local' => 'required|max:64', // todo: disallow leading and trailing dot
-            'domain' => 'required|exists:domains,name',
+            'domain' => 'required|regex:/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i|exists:domains,uuid',
             'password' => 'required',
             'password-verify' => 'required|same:password',
             'accept-tos' => 'required',
@@ -57,27 +57,31 @@ class UserController extends Controller
         // apply basic form validation
         $validator = Validator::make($request->all(), $rules);
 
-        $domain = Domain::findByNameOrFail($request->input('domain'));
-
-        // disallow non-public domains
-        if (!$domain->public) {
-            $validator->errors()->add('domain', trans('validation.not_in', [
-                'attribute' => 'domain'
-            ]));
-        }
-
-        // dont allow addresses considered unregisterable
-        if (!User::isRegisterable($request->input('local'), $domain->uuid)) {
-            $validator->errors()->add('local', trans('user.dupe'));
-        }
-
-        // disallow illegal addresses
         try {
+            $domain = Domain::find($request->input('domain'));
+
+            if ($domain === null) {
+                throw new Exception(trans('domain.unknown'));
+            }
+
+            // disallow non-public domains
+            if (!$domain->public) {
+                $validator->errors()->add('domain', trans('validation.not_in', [
+                    'attribute' => 'domain'
+                ]));
+            }
+
+            // dont allow addresses considered unregisterable
+            if (!User::isRegisterable($request->input('local'), $domain->uuid)) {
+                $validator->errors()->add('local', trans('user.dupe'));
+            }
+
+            // disallow illegal addresses
             if (!User::isValidAddress($request->input('local'), $domain->name)) {
                 $validator->errors()->add('local', trans('user.illegal'));
             }
         } catch (Exception $e) {
-            $validator->errors()->add('application', trans('user.regex_error'));
+            $validator->errors()->add('application', $e->getMessage());
         }
 
         // check if any errors occurred
