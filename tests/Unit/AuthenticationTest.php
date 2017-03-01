@@ -1,5 +1,8 @@
 <?php
 
+namespace Tests\Unit;
+
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -12,20 +15,26 @@ class AuthenticationTest extends TestCase
 
     public function testLoginCorrect()
     {
-        $this->assertRedirectedToRoute('dashboard', [], [], $this->call('POST', route('login.post'), [
+        $response = $this->post(route('login.post'), [
             'email' => 'test@test.test',
             'password' => 'test',
-        ]));
+        ]);
+
+        $response->assertRedirect(route('dashboard'));
+
+        //$this->assertRedirectedToRoute('dashboard', [], [], $this->call('POST', route('login.post'), [
 
         // TODO: make sure user is authenticated at this point
     }
 
     public function testLoginIncorrect()
     {
-        $this->assertRedirectedToRoute('login', [], [], $this->call('POST', route('login.post'), [
+        $response = $this->post(route('login.post'), [
             'email' => 'test@test.test',
             'password' => 'wrong test',
-        ]));
+        ]);
+
+        $response->assertRedirect(route('login'));
 
         // TODO: make sure the user is still not authenticated at this point
     }
@@ -37,32 +46,32 @@ class AuthenticationTest extends TestCase
 
     public function testLoginFormAsGuest()
     {
-        $this->assertResponseOk($this->call('GET', route('login')));
+        $response = $this->get(route('login'));
+
+        $response->assertStatus(200);
     }
 
     public function testLoginFormAsUser()
     {
-        $this->assertRedirectedToRoute('dashboard', [], [],
-            $this
-                ->actingAs(User::findByAddressOrFail('user@test.test'))
-                ->call('GET', route('login'))
-        );
+        $user = User::findByAddressOrFail('user@test.test');
+        $response = $this->actingAs($user)->get(route('login'));
+
+        $response->assertRedirect(route('dashboard'));
     }
 
     public function testLogoutAsGuest()
     {
-        $this->assertRedirectedToRoute('login', [], [],
-            $this->call('GET', route('logout'))
-        );
+        $response = $this->get(route('logout'));
+
+        $response->assertRedirect(route('login'));
     }
 
     public function testLogoutAsUser()
     {
-        $this->assertRedirectedToRoute('login', [], [],
-            $this
-                ->actingAs(User::findByAddressOrFail('user@test.test'))
-                ->call('GET', route('logout'))
-        );
+        $user = User::findByAddressOrFail('user@test.test');
+        $response = $this->actingAs($user)->get(route('logout'));
+
+        $response->assertRedirect(route('login'));
 
         // TODO: make sure user is no longer authenticated out at this point
     }
