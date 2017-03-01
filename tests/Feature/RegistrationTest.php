@@ -1,5 +1,8 @@
 <?php
 
+namespace Tests;
+
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -32,22 +35,22 @@ class RegistrationTest extends TestCase
         ];
 
         foreach ($locals as $local) {
-            $this->assertRedirectedToRoute('user.create', [], [],
-                $this->call('POST', route('user.store'), [
+            $response = $this->post(route('user.store'), [
                     'local' => $local,
                     'domain' => $this->domain,
                     'password' => 'test',
                     'password-verify' => 'test',
                     'accept-tos' => true,
-                ])
-            );
+            ]);
+
+            $response->assertRedirect(route('user.create'));
         }
     }
 
     public function testNoregLocal()
     {
         $local = NoregLocal::first()->local;
-        $request = $this->call('POST', route('user.store'), [
+        $response = $this->post(route('user.store'), [
             'local' => $local,
             'domain' => $this->domain,
             'password' => 'test',
@@ -55,14 +58,14 @@ class RegistrationTest extends TestCase
             'accept-tos' => true,
         ]);
 
-        $this->assertRedirectedToRoute('user.create', [], [], $request);
-        $this->assertSessionHasErrors(['local'], $request);
+        $response->assertRedirect(route('user.create'));
+        $response->assertSessionHasErrors(['local']);
     }
 
     public function testPrivateDomain()
     {
         $domain = Domain::findByNameOrFail('private.test.test')->uuid;
-        $request = $this->call('POST', route('user.store'), [
+        $response = $this->post(route('user.store'), [
             'local' => 'this.surely.wont.exist.in.the.tests',
             'domain' => $domain,
             'password' => 'test',
@@ -70,22 +73,23 @@ class RegistrationTest extends TestCase
             'accept-tos' => true,
         ]);
 
-        $this->assertRedirectedToRoute('user.create', [], [], $request);
-        $this->assertSessionHasErrors(['domain'], $request);
+        $response->assertRedirect(route('user.create'));
+        $response->assertSessionHasErrors(['domain']);
     }
 
     public function testShowFormAsGuest()
     {
-        $this->assertResponseOk($this->call('GET', route('user.create')));
+        $response = $this->get(route('user.create'));
+
+        $response->assertStatus(200);
     }
 
     public function testShowFormAsUser()
     {
-        $this->assertRedirectedToRoute('dashboard', [], [],
-            $this
-                ->actingAs(User::findByAddressOrFail('user@test.test'))
-                ->call('GET', route('user.create'))
-        );
+        $user = User::findByAddressOrFail('user@test.test');
+        $response = $this->actingAs($user)->get(route('user.create'));
+
+        $response->assertRedirect(route('dashboard'));
     }
 
     /**
@@ -108,34 +112,34 @@ class RegistrationTest extends TestCase
         ];
 
         foreach ($locals as $local) {
-            $this->assertRedirectedToRoute('login', [], [],
-                $this->call('POST', route('user.store'), [
-                    'local' => $local,
-                    'domain' => $this->domain,
-                    'password' => 'test',
-                    'password-verify' => 'test',
-                    'accept-tos' => true,
-                ])
-            );
+            $response = $this->post(route('user.store'), [
+                'local' => $local,
+                'domain' => $this->domain,
+                'password' => 'test',
+                'password-verify' => 'test',
+                'accept-tos' => true,
+            ]);
+
+            $response->assertRedirect(route('login'));
         }
     }
 
     public function testUncheckedTos()
     {
-        $request = $this->call('POST', route('user.store'), [
+        $response = $this->post(route('user.store'), [
             'local' => 'this.surely.wont.exist.in.the.tests',
             'domain' => $this->domain,
             'password' => 'test',
             'password-verify' => 'test',
         ]);
 
-        $this->assertRedirectedToRoute('user.create', [], [], $request);
-        $this->assertSessionHasErrors(['accept-tos'], $request);
+        $response->assertRedirect(route('user.create'));
+        $response->assertSessionHasErrors(['accept-tos']);
     }
 
     public function testUnknownDomain()
     {
-        $request = $this->call('POST', route('user.store'), [
+        $response = $this->post(route('user.store'), [
             'local' => 'this.surely.wont.exist.in.the.tests',
             'domain' => 'not.in.the.tests.org',
             'password' => 'test',
@@ -143,13 +147,13 @@ class RegistrationTest extends TestCase
             'accept-tos' => true,
         ]);
 
-        $this->assertRedirectedToRoute('user.create', [], [], $request);
-        $this->assertSessionHasErrors(['domain'], $request);
+        $response->assertRedirect(route('user.create'));
+        $response->assertSessionHasErrors(['domain']);
     }
 
     public function testUnmatchedPassword()
     {
-        $request = $this->call('POST', route('user.store'), [
+        $response = $this->post(route('user.store'), [
             'local' => 'this.surely.wont.exist.in.the.tests',
             'domain' => $this->domain,
             'password' => 'test',
@@ -157,7 +161,7 @@ class RegistrationTest extends TestCase
             'accept-tos' => true,
         ]);
 
-        $this->assertRedirectedToRoute('user.create', [], [], $request);
-        $this->assertSessionHasErrors(['password-verify'], $request);
+        $response->assertRedirect(route('user.create'));
+        $response->assertSessionHasErrors(['password-verify']);
     }
 }
