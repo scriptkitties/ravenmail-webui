@@ -12,7 +12,7 @@
             <label for="domain">Domain name</label>
             <select id="domain" name="domain" required>
                 @foreach($domains as $domain)
-                    <option valua="{{ $domain->name }}">{{ $domain->name }}</option>
+                    <option value="{{ $domain->uuid }}">{{ $domain->name }}</option>
                 @endforeach
             </select>
         </div>

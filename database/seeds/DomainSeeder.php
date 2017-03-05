@@ -21,6 +21,13 @@ class DomainSeeder extends Seeder
             'contact' => 'test@test.test'
         ]);
 
+        DB::table('domains')->insert([
+            'uuid' => Uuid::generate(4)->string,
+            'name' => 'private.test.test',
+            'public' => false,
+            'contact' => 'test@test.test'
+        ]);
+
         factory(Domain::class, rand(5, 15))->create();
     }
 }

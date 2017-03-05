@@ -41,43 +41,53 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // apply basic form validation
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'local' => 'required|max:64', // todo: disallow leading and trailing dot
-            'domain' => 'required|exists:domains,name',
+            'domain' => 'required|regex:/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i|exists:domains,uuid',
             'password' => 'required',
             'password-verify' => 'required|same:password',
             'accept-tos' => 'required',
-            'captcha' => 'required|captcha'
-        ]);
+        ];
 
-        $domain = Domain::findByNameOrFail($request->input('domain'));
-
-        // disallow non-public domains
-        if (!$domain->public) {
-            $validator->errors()->add('domain', trans('validation.not_in', [
-                'attribute' => 'domain'
-            ]));
+        // @todo: figure out how to properly mock the captcha so it can be tested properly
+        if (config('app.env') !== 'testing') {
+            $rules['captcha'] = 'required|captcha';
         }
 
-        // dont allow addresses considered unregisterable
-        if (!User::isRegisterable($request->input('local'), $request->input('domain'))) {
-            $validator->errors()->add('local', trans('user.dupe'));
-        }
+        // apply basic form validation
+        $validator = Validator::make($request->all(), $rules);
 
-        // disallow illegal addresses
         try {
-            if (!User::isValidLocal($request->input('local'))) {
+            $domain = Domain::find($request->input('domain'));
+
+            if ($domain === null) {
+                throw new Exception(trans('domain.unknown'));
+            }
+
+            // disallow non-public domains
+            if (!$domain->public) {
+                $validator->errors()->add('domain', trans('validation.not_in', [
+                    'attribute' => 'domain'
+                ]));
+            }
+
+            // dont allow addresses considered unregisterable
+            if (!User::isRegisterable($request->input('local'), $domain->uuid)) {
+                $validator->errors()->add('local', trans('user.dupe'));
+            }
+
+            // disallow illegal addresses
+            if (!User::isValidAddress($request->input('local'), $domain->name)) {
                 $validator->errors()->add('local', trans('user.illegal'));
             }
         } catch (Exception $e) {
-            $validator->errors()->add('application', trans('user.regex_error'));
+            $validator->errors()->add('application', $e->getMessage());
         }
 
         // check if any errors occurred
         if ($validator->errors()->any()) {
             return redirect()
-                ->back()
+                ->route('user.create')
                 ->withErrors($validator)
                 ->withInput()
             ;
@@ -86,7 +96,7 @@ class UserController extends Controller
         // create the new user
         $user = new User();
         $user->local = $request->input('local');
-        $user->domain = $request->input('domain');
+        $user->domain_uuid = $domain->uuid;
         $user->password = Hash::make($request->input('password'));
         $user->save();
 
@@ -97,20 +107,6 @@ class UserController extends Controller
 
         // return to the login page
         return redirect()->route('login');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(string $address)
-    {
-        // NYI
-        App::abort(404);
     }
 
     /**

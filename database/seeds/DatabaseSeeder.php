@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AliasSeeder::class);
         $this->call(DomainModeratorSeeder::class);
         $this->call(NoregAddressSeeder::class);
+        $this->call(NoregLocalSeeder::class);
     }
 }

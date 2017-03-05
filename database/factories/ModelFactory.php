@@ -15,6 +15,7 @@ use App\Alias;
 use App\Domain;
 use App\DomainModerator;
 use App\NoregAddress;
+use App\NoregLocal;
 use App\User;
 use App\Verification;
 
@@ -53,6 +54,12 @@ $factory->define(DomainModerator::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(NoregAddress::class, function (Faker\Generator $faker) {
+    return [
+        'local' => $faker->userName,
+    ];
+});
+
+$factory->define(NoregLocal::class, function (Faker\Generator $faker) {
     return [
         'local' => $faker->userName,
     ];

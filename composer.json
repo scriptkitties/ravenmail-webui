@@ -49,7 +49,7 @@
             "php artisan optimize"
         ],
         "serve": "php -S 127.1:8000 -t public server.php",
-		"test": "sh tests.sh"
+        "test": "sh test.sh"
     },
     "config": {
         "preferred-install": "dist"
